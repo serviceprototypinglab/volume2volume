@@ -9,16 +9,16 @@
   `volume2volume` uses the command line client of `openshift`, `oc`, to communicate between the `openshift` clusters 
   and `stash` for the backup and recovery of the data. 
 
- A unique advantage of `volume2volume` is that it combines multiple steps into a convenient workflow for the migration of data volumes, including backup and recovery of the data.
+ A unique advantage of `volume2volume` is that it combines multiple steps into a convenient workflow for the migration
+  of data volumes, including backup and recovery of the data.
 
- `volume2volume` is a prototype from the Cloud-Native Applications research initiative of the Service Prototyping Lab at Zurich University of Applied Sciences. Use with care, things may break. We will share our findings on cloud application migration at a later point in time.
+ `volume2volume` is a prototype from the Cloud-Native Applications research initiative of the Service Prototyping Lab
+  at Zurich University of Applied Sciences. Use with care, things may break. We will share our findings
+  on cloud application migration at a later point in time.
 
 ## Use Case
 
 Use the command `help` to see the list of command and the description of them.
-
-
-
 
 With `findVolumes`, you will identify the volumes in the two clusters and make the pairs.
 With `backup`, you will create the restic objects to do the backup of the volumes. (in the old cluster).
@@ -73,8 +73,8 @@ Until then, please use the following commands to compile and install:
 
 ## First steps
 
-This small example shows how to migrate the data in the volumes of an OpenShift application from a local OpenShift development cluster
-to APPUiO, the Swiss Container Platform.
+This small example shows how to migrate the data in the volumes of an OpenShift application from 
+a local OpenShift development cluster to APPUiO, the Swiss Container Platform.
 
 ```
     volume2volume migrate \
