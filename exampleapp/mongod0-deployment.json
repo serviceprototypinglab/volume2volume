@@ -3,7 +3,7 @@
   "apiVersion": "extensions/v1beta1",
   "metadata": {
     "name": "arkismongopersistentd0",
-    "namespace": "myproject",
+    "namespace": "arkis",
     "creationTimestamp": null
   },
   "spec": {

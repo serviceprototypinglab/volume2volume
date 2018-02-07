@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: stash-operator
+  namespace: arkis
+  labels:
+    app: stash
+  initializers:
+    pending: []
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stash
+  template:
+    metadata:
+      labels:
+        app: stash
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      containers:
+      - name: operator
+        args:
+        - run
+        - --v=3
+        image: appscode/stash:0.6.3
+        ports:
+        - containerPort: 56790
+          name: http
+          protocol: TCP
+      - name: pushgateway
+        args:
+        - -web.listen-address=:56789
+        - -persistence.file=/var/pv/pushgateway.dat
+        image: prom/pushgateway:v0.4.0
+        ports:
+        - containerPort: 56789
+          name: pushgateway
+          protocol: TCP
+        volumeMounts:
+          - mountPath: /var/pv
+            name: data-volume
+          - mountPath: /tmp
+            name: stash-scratchdir
+      volumes:
+        - emptyDir: {}
+          name: data-volume
+        - emptyDir: {}
+          name: stash-scratchdir
+      tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Exists"

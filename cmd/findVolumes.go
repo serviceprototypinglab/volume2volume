@@ -33,9 +33,11 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("findVolumes called")
-
 		//findAllVolumes(cmd, args)
-		pairsVolumesByName()
+		a,b := pairsVolumesByName()
+		fmt.Println(a[0]["podName"])
+		fmt.Println("---")
+		fmt.Println(b[0]["podName"])
 	},
 }
 
@@ -161,56 +163,26 @@ func findVolumes(cluster string) {
 	}
 }
 
-func findVolumes1(cmd *cobra.Command, args []string){
-
-	getAllValue()
-	// Connect to cluster From
-	loginCluster(ClusterFrom, UsernameFrom, PasswordFrom)
-
-	//stashObjects := []string{"deployment","daemonset","statefulset"}
-	stashObjects := []string{"deployment"}
-
-	// for each object
-	for i,v := range stashObjects {
-		fmt.Println(i)
-		fmt.Println(v)
-
-	}
-		// find volume
-		// create json with info
-		// save the info
-
-	// Connect to cluster To
-		// for each object
-		// find volume
-		// create json with info
-		// save the info
-
-	// Pair the volumes from cluster From with the volumes from Cluster To.
-
-}
-
-func pairsVolumesByName() {
-
+func pairsVolumesByName() ([]map[string]interface{}, []map[string]interface{})  {
 	//Read  Volumes/ClusterFrom/data.json
+	var from [] map[string]interface{}
+	var to [] map[string]interface{}
 	getAllValue()
 	clusterFromVolumes := readJsonData(PathData + "/ClusterFrom")
-	fmt.Println("read")
-	for i,v := range clusterFromVolumes {
-		fmt.Println(i)
-		fmt.Println(v["deploymentName"])
+	clusterToVolumes := readJsonData(PathData + "/ClusterTo")
+	fmt.Println("read it")
+	for _,v := range clusterFromVolumes {
+		for _,k := range clusterToVolumes {
+			if v["deploymentName"] == k["deploymentName"] {
+				if v["volumeName"] == k["volumeName"] {
+					fmt.Println(v["volumeName"])
+					from = append(from, v)
+					to = append(to, k)
+				}
+			}
+		}
 	}
-	//Read  Volumes/ClusterTo/data.json
-	//Read  Volumes/ClusterFrom/data.json
-	//clusterToVolumes := readJsonData(PathData + "/" + ClusterTo )
-	//fmt.Println(clusterToVolumes)
-	//Create array pairs
-
-	//add pairs of volumes by name to the array
-
-	//save the array in /volumes
-
-
+	return from, to
 }
 
 func readJsonData(path string) []map[string]interface{} {

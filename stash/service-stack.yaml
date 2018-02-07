@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: stash
+  name: stash-operator
+  namespace: arkis
+spec:
+  ports:
+  - name: pushgateway
+    port: 56789
+    targetPort: pushgateway
+  - name: http
+    port: 56790
+    targetPort: http
+  selector:
+    app: stash

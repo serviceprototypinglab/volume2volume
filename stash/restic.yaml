@@ -1,0 +1,27 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Restic
+metadata:
+  name: stash-restic-mongo
+  namespace: arkis
+spec:
+  selector:
+    matchLabels:
+      name: arkismongopersistentd0
+      service: arkismongopersistentd0
+  fileGroups:
+  - path: /data/db
+    retentionPolicyName: 'keep-last-5'
+  backend:
+    local:
+      mountPath: /data/db
+      hostPath:
+        path: /data/db
+    storageSecretName: mongo-persistent-storage
+  schedule: '@every 1m'
+  volumeMounts:
+  - mountPath: /data/db
+    name: mongo-persistent-storage
+  retentionPolicies:
+  - name: 'keep-last-5'
+    keepLast: 5
+    prune: true
