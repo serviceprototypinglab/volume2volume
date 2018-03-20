@@ -8,14 +8,12 @@ spec:
     kind: Deployment
     name: arkismongopersistentd0
   backend:
-    local:
-      mountPath: /safe
-      hostPath:
-        path: /safe2
-    storageSecretName: stash-demo
+    s3:
+      endpoint: 's3.amazonaws.com'
+      bucket: ramzrestic
+    storageSecretName: s3-secret
   paths:
   - /data/db
   recoveredVolumes:
-  - mountPath: /repo
-    hostPath:
-      path: /example3
+  - mountPath: /data/db
+    emptyDir: {}

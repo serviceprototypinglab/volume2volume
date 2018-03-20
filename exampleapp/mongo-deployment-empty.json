@@ -34,16 +34,15 @@
                 "name": "mongo-persistent-storage",
                 "mountPath": "/data/db"
               }
-          ],
+            ],
             "resources": {}
           }
         ],
         "volumes": [
           {
             "name": "mongo-persistent-storage",
-            "hostPath": {
-              "path": "/example2"
-            }
+            "emptyDir": {}
+
           }
         ],
         "restartPolicy": "Always"

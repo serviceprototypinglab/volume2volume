@@ -4,7 +4,7 @@ metadata:
   labels:
     app: stash
   name: stash-operator
-  namespace: arkis
+  namespace: default
 spec:
   ports:
   - name: pushgateway

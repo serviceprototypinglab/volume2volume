@@ -48,8 +48,7 @@ func init() {
 }
 
 func migrateData(cmd *cobra.Command, args []string){
-	exportData(cmd, args)
-	upData(cmd, args)
+	//TODO  migrate list of volumes in parallel
 	//downData(cmd, args)
 }
 

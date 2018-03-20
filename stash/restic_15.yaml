@@ -1,10 +1,10 @@
-apiVersion: apps/v1beta1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: stash-operator
-  namespace: default
   labels:
     app: stash
+  name: stash-operator
+  namespace: kube-system
 spec:
   replicas: 1
   selector:
@@ -14,15 +14,13 @@ spec:
     metadata:
       labels:
         app: stash
-      annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       containers:
       - name: operator
         args:
         - run
         - --v=3
-        image: appscode/stash:0.6.3
+        image: appscode/stash:0.4.2
         ports:
         - containerPort: 56790
           name: http
@@ -46,6 +44,21 @@ spec:
           name: data-volume
         - emptyDir: {}
           name: stash-scratchdir
-      tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Exists"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: stash
+  name: stash-operator
+  namespace: kube-system
+spec:
+  ports:
+  - name: pushgateway
+    port: 56789
+    targetPort: pushgateway
+  - name: http
+    port: 56790
+    targetPort: http
+  selector:
+    app: stash

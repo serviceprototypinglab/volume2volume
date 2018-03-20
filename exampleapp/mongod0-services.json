@@ -3,7 +3,7 @@
   "apiVersion": "v1",
   "metadata": {
     "name": "arkismongopersistentd0",
-    "namespace": "arkis",
+    "namespace": "default",
     "creationTimestamp": null,
     "labels": {
       "service": "arkismongopersistentd0"

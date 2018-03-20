@@ -9,18 +9,17 @@ spec:
       app: arkismongopersistentd0
   fileGroups:
   - path: /data/db
-    retentionPolicyName: 'keep-last-5'
+    retentionPolicyName: 'keep-last-2'
   backend:
-    local:
-      mountPath: /safe
-      hostPath:
-        path: /safe2
-    storageSecretName: stash-demo
-  schedule: '@every 1m'
+    s3:
+      endpoint: 's3.amazonaws.com'
+      bucket: ramzrestic
+    storageSecretName: s3-secret
+  schedule: '@yearly'
   volumeMounts:
   - mountPath: /data/db
     name: mongo-persistent-storage
   retentionPolicies:
-  - name: 'keep-last-5'
-    keepLast: 5
+  - name: 'keep-last-2'
+    keepLast: 2
     prune: true
