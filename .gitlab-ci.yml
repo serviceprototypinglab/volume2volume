@@ -10,8 +10,8 @@ before_script:
   - echo "$GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
   # To find references to its own modules the project has still
   # to be copied to the correct location in the GOPATH.
-  - mkdir -p $GOPATH/src/$BASE_URL/
-  - cp -r /builds/$CI_PROJECT_NAMESPACE $GOPATH/src/$BASE_URL/
+  # - mkdir -p $GOPATH/src/$BASE_URL/
+  # - cp -r /builds/$CI_PROJECT_NAMESPACE $GOPATH/src/$BASE_URL/
 
 stages:
   - test
