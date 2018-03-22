@@ -57,6 +57,7 @@ func init() {
 
 
 // Identify the version of the cluster and create the proper stash version.
-func configureCluster(string cluster) {
+func configureCluster(cluster string) {
 	// TODO
+	fmt.Println(cluster)
 }
