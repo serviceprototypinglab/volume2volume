@@ -17,6 +17,9 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+
+	"volume2volume/pkg/app"
+
 )
 
 // backupCmd represents the backup command
@@ -31,7 +34,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("backup called")
-		exportData(cmd, args)
+		app.ExportData(cmd, args, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 	},
 }
 
