@@ -12,6 +12,8 @@ before_script:
   # to be copied to the correct location in the GOPATH.
   - mkdir -p $GOPATH/src/$BASE_URL/
   - cp -r /builds/$CI_PROJECT_NAMESPACE $GOPATH/src/$BASE_URL/
+  - ls
+  - pwd
 
 stages:
   # - test
@@ -33,7 +35,11 @@ binaries:
     - master
   script:
     - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - ls
+    - pwd
     - go generate $(go list ./... | grep -v /vendor/)
+    - ls
+    - pwd
     - go build
     # This may differ for each project.
     # - cd cmd/ && go build -o $CI_PROJECT_DIR/artifacts/cmd && cd ..
