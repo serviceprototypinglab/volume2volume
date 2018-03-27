@@ -40,7 +40,7 @@ binaries:
     - go generate $(go list ./... | grep -v /vendor/)
     - ls
     - pwd
-    - go build
+    - go build volume2volume
     # This may differ for each project.
     # - cd cmd/ && go build -o $CI_PROJECT_DIR/artifacts/cmd && cd ..
 
