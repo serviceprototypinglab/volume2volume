@@ -562,8 +562,6 @@ func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFr
 	}
 }
 
-
-
 func UpDataToVolume(podName, path, mountPath string) {
 	a := "oc rsync " +  path + "/data/"  +  " " + podName + ":" + mountPath + "/"
 	fmt.Println(a)
@@ -576,3 +574,5 @@ func UpDataToVolume(podName, path, mountPath string) {
 		fmt.Println(string(cmdUpOut))
 	}
 }
+
+//END
