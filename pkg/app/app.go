@@ -417,7 +417,7 @@ func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFr
 	changeProject(ProjectTo)
 
 
-	data := ReadJsonData("./volumes")
+	data := utils.ReadJsonData("./volumes")
 
 	var dat map[string]interface{}
 	typeObject := "pods"
