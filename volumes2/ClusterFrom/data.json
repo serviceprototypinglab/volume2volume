@@ -1,0 +1,37 @@
+[{"deploymentName":"arkismongopersistentd0",
+  "descriptionVolume":{"emptyDir":{},"name":"mongo-persistent-storage"},
+  "descriptionVolumeMount":{"mountPath":"/data/db","name":"mongo-persistent-storage"},
+  "mountPath":"/data/db",
+  "pathVolume":"volumes/ClusterFrom/arkismongopersistentd0/arkismongopersistentd0-1525581671-04k6l/mongo-persistent-storage",
+  "podName":"arkismongopersistentd0-1525581671-04k6l",
+  "rsName":"arkismongopersistentd0-1525581671",
+  "volumeName":"mongo-persistent-storage"},
+
+  {"deploymentName":"arkismongopersistentd0",
+    "descriptionVolume":{"name":"default-token-f0422",
+      "secret":{"defaultMode":420,"secretName":"default-token-f0422"}},
+    "descriptionVolumeMount":
+    {"mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+      "name":"default-token-f0422","readOnly":true},
+    "mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+    "pathVolume":"volumes/ClusterFrom/arkismongopersistentd0/arkismongopersistentd0-1525581671-04k6l/default-token-f0422",
+    "podName":"arkismongopersistentd0-1525581671-04k6l",
+    "rsName":"arkismongopersistentd0-1525581671",
+    "volumeName":"default-token-f0422"},
+
+  {"deploymentName":"deployment1",
+    "descriptionVolume":{"name":"default-token-f0422",
+      "secret":{"defaultMode":420,"secretName":"default-token-f0422"}},
+    "descriptionVolumeMount":{"mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+      "name":"default-token-f0422","readOnly":true},
+    "mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+    "pathVolume":"volumes/ClusterFrom/deployment1/deployment1-768212891-1qc01/default-token-f0422",
+    "podName":"deployment1-768212891-1qc01","rsName":"deployment1-768212891","volumeName":"default-token-f0422"},
+
+  {"deploymentName":"deployment1","descriptionVolume":{"name":"default-token-f0422","secret":
+  {"defaultMode":420,"secretName":"default-token-f0422"}},
+    "descriptionVolumeMount":{"mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+      "name":"default-token-f0422","readOnly":true},"mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+    "pathVolume":"volumes/ClusterFrom/deployment1/deployment1-768212891-72msf/default-token-f0422",
+    "podName":"deployment1-768212891-72msf","rsName":"deployment1-768212891",
+    "volumeName":"default-token-f0422"}]

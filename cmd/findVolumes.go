@@ -32,11 +32,11 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		app.Example()
 		fmt.Println("findVolumes called")
-		//app.FindAllVolumes(cmd, args)
-		a,b := app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-		fmt.Println(a[0]["podName"])
-		fmt.Println("---")
-		fmt.Println(b[0]["podName"])
+		FindAllVolumes(cmd, args)
+		//a,b := app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+		//fmt.Println(a[0]["podName"])
+		//fmt.Println("---")
+		//fmt.Println(b[0]["podName"])
 	},
 }
 
@@ -53,7 +53,12 @@ func init() {
 }
 
 func FindAllVolumes(cmd *cobra.Command, args []string){
-	app.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	app.FindVolumes("ClusterFrom", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
-	app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
+	//var PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string
+	//var ObjectsOc []string
+	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom,
+	PasswordTo, ObjectsOc = app.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+		ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	app.FindVolumes("ClusterFrom", PathTemplate, PathData, ClusterFrom, ClusterTo,
+		ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
+	//app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
 }
