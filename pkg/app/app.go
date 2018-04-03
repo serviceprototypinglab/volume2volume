@@ -1,6 +1,5 @@
 package app
 
-
 import (
 	"fmt"
 	"github.com/spf13/cobra"
@@ -17,8 +16,9 @@ func Example() {
 	fmt.Println("example")
 }
 
-
-func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string]interface{}, []map[string]interface{})  {
+func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo,
+	UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string]interface{},
+	[]map[string]interface{})  {
 	//Read  Volumes/ClusterFrom/data.json
 	var from [] map[string]interface{}
 	var to [] map[string]interface{}
@@ -41,7 +41,6 @@ func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectT
 }
 
 //---------
-
 
 func GetTypeObjects(ObjectsOc, ObjectsTypes []string) []string {
 	// List of type of objects to export
@@ -83,20 +82,21 @@ func GetValueFromConfig(s string) interface{} {
 	return ""
 }
 
-func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
+func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 	keys := []string{"pathtemplate","pathdata","objects","clusterto", "clusterfrom","projectto", "projectfrom",
 		"usernamefrom", "usernameto", "passwordfrom", "passwordto"}
 	for _, keyConfig := range keys {
 		//fmt.Println("-------")
 		//fmt.Println(keyConfig)
 		//fmt.Println(viper.GetString(keyConfig))
-		fmt.Println("key -> " + keyConfig)
+		//fmt.Println("key -> " + keyConfig)
 		switch keyConfig {
 		case "pathtemplate":
 			if PathTemplate == ""{
 				PathTemplate = GetValueFromConfig("PathTemplate").(string)
 			}
-			fmt.Println("PathTemplate -> " + PathTemplate)
+			// fmt.Println("PathTemplate -> " + PathTemplate)
 		case "pathdata":
 			if PathData == ""{
 				PathData = GetValueFromConfig("PathData").(string)
@@ -140,25 +140,28 @@ func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, Proj
 			if ObjectsOc[0] == "" {
 				ObjectsOc = []string{GetValueFromConfig("objects").(string)}
 				ObjectsOc = GetTypeObjects(ObjectsOc, ObjectsOc)
-				fmt.Println(ObjectsOc)
+				//fmt.Println(ObjectsOc)
 			}
 		}
 	}
 }
-func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) (string, string, string, string, string, string, string, string, string, string, []string) {
+
+func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) (string, string, string, string,
+		string, string, string, string, string, string, []string) {
 	keys := []string{"pathtemplate","pathdata","objects","clusterto", "clusterfrom","projectto", "projectfrom",
 		"usernamefrom", "usernameto", "passwordfrom", "passwordto"}
 	for _, keyConfig := range keys {
 		//fmt.Println("-------")
 		//fmt.Println(keyConfig)
 		//fmt.Println(viper.GetString(keyConfig))
-		fmt.Println("key -> " + keyConfig)
+		// fmt.Println("key -> " + keyConfig)
 		switch keyConfig {
 		case "pathtemplate":
 			if PathTemplate == ""{
 				PathTemplate = GetValueFromConfig("PathTemplate").(string)
 			}
-			fmt.Println("PathTemplate -> " + PathTemplate)
+			// fmt.Println("PathTemplate -> " + PathTemplate)
 		case "pathdata":
 			if PathData == ""{
 				PathData = GetValueFromConfig("PathData").(string)
@@ -202,13 +205,12 @@ func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo
 			if ObjectsOc[0] == "" {
 				ObjectsOc = []string{GetValueFromConfig("objects").(string)}
 				ObjectsOc = GetTypeObjects(ObjectsOc, ObjectsOc)
-				fmt.Println(ObjectsOc)
+				// fmt.Println(ObjectsOc)
 			}
 		}
 	}
 	return PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc
 }
-
 
 func GetDeploymentReplicaSet(pod string) (string, string) {
 	auxString := strings.Split(pod, "-")
@@ -219,7 +221,7 @@ func GetDeploymentReplicaSet(pod string) (string, string) {
 
 func ExportDataFromVolume(pod string, path string, mountPath string) {
 	a := "oc rsync " + pod + ":" + mountPath + "/" +  " " + path + "/data"
-	fmt.Println(a)
+	//fmt.Println(a)
 	cmdExportData := exec.Command("oc", "rsync", pod + ":" + mountPath + "/", path + "/data")
 	cmdExportOut, err := cmdExportData.Output()
 	if err != nil {
@@ -263,7 +265,6 @@ func createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentNa
 	return m
 }
 
-
 func loginCluster(cluster, username, password string) {
 	username = "--username=" + username
 	password = "--password=" + password
@@ -303,7 +304,8 @@ func getObjects(typeObject string) string {
 	return string(CmdOut)
 }
 
-func ExportData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
+func ExportData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+	ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 
 
 	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
@@ -398,8 +400,7 @@ func ExportData(cmd *cobra.Command, args []string, PathTemplate, PathData, Clust
 	}
 }
 
-
-//"----------- UP ---"
+//"----------- UP --------"
 func createRecovery(){
 
 	// find all pairs of volumes and Resict objects
@@ -409,7 +410,8 @@ func createRecovery(){
 
 }
 
-func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
+func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+	ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 
 	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 	loginCluster(ClusterTo, UsernameTo, PasswordTo)
