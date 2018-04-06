@@ -5,18 +5,18 @@ import (
 	"os/exec"
 )
 
-func loginCluster(cluster, username, password string) {
+func LoginCluster(cluster, username, password string) {
 	username = "--username=" + username
 	password = "--password=" + password
 	CmdLogin := exec.Command("oc", "login", cluster, username, password)
 	//CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin")
 	CmdOut, err := CmdLogin.Output()
 	fmt.Println(string(CmdOut))
-	checkErrorMessage(err, "Error running login")
+	CheckErrorMessage(err, "Error running login")
 	fmt.Println(string(CmdOut))
 }
 
-func getObjects(typeObject string) string {
+func GetObjects(typeObject string) string {
 	CmdGetDeployments := exec.Command("oc", "get", typeObject, "-o", "json")
 	CmdOut, err := CmdGetDeployments.Output()
 	if err != nil {
@@ -27,9 +27,9 @@ func getObjects(typeObject string) string {
 	return string(CmdOut)
 }
 
-func changeProject(projectName string) {
+func ChangeProject(projectName string) {
 	CmdProject := exec.Command("oc", "project", projectName)
 	CmdProjectOut, err := CmdProject.Output()
-	checkErrorMessage(err, "Error running: change project")
+	CheckErrorMessage(err, "Error running: change project")
 	fmt.Println(string(CmdProjectOut))
 }

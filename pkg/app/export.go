@@ -6,20 +6,21 @@ import (
 	"fmt"
 	"encoding/json"
 	"os/exec"
+	"volume2volume/pkg/utils"
 )
 
 func ExportData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 
 
-	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	loginCluster(ClusterFrom, UsernameFrom, PasswordFrom)
+	utils.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	utils.LoginCluster(ClusterFrom, UsernameFrom, PasswordFrom)
 	os.Mkdir(PathData, os.FileMode(0777)) //All permision??
-	changeProject(ProjectFrom)
+	utils.ChangeProject(ProjectFrom)
 
 	var dat map[string]interface{}
 	typeObject := "pods"
-	typeString := getObjects(typeObject)
+	typeString := utils.GetObjects(typeObject)
 	byt := []byte(typeString)
 	if err1 := json.Unmarshal(byt, &dat); err1 != nil {
 		fmt.Println("Error with the objects with type " + typeObject)
@@ -46,7 +47,7 @@ ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsO
 
 				}
 				//Create a folder for each deployment
-				deploymentName, rsName := GetDeploymentReplicaSet(podName)
+				deploymentName, rsName := utils.GetDeploymentReplicaSet(podName)
 				os.Mkdir(PathData+"/"+deploymentName, os.FileMode(0777))
 				os.Mkdir(PathData+"/"+deploymentName+"/"+podName, os.FileMode(0777))
 				//fmt.Println(podName)
@@ -70,7 +71,7 @@ ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsO
 										mountPath := volumesMountAux[k].(map[string]interface{})["mountPath"].(string)
 										pathVolume := PathData+"/"+deploymentName+"/"+podName + "/" + volumeName
 										os.Mkdir(pathVolume, os.FileMode(0777))
-										aux := createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
+										aux := utils.CreateJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
 											descriptionVolume, descriptionVolumeMount)
 										a = append(a, aux)
 										os.Mkdir(pathVolume + "/data", os.FileMode(0777))

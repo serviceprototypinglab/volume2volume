@@ -22,17 +22,17 @@ func createRecovery(){
 func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 
-	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	loginCluster(ClusterTo, UsernameTo, PasswordTo)
+	utils.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	utils.LoginCluster(ClusterTo, UsernameTo, PasswordTo)
 	os.Mkdir(PathData, os.FileMode(0777)) //All permission??
-	changeProject(ProjectTo)
+	utils.ChangeProject(ProjectTo)
 
 
 	data := utils.ReadJsonData("./volumes")
 
 	var dat map[string]interface{}
 	typeObject := "pods"
-	typeString := getObjects(typeObject)
+	typeString := utils.GetObjects(typeObject)
 	byt := []byte(typeString)
 	if err1 := json.Unmarshal(byt, &dat); err1 != nil {
 		fmt.Println("Error with the objects with type " + typeObject)
@@ -56,7 +56,7 @@ ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsO
 
 				}
 				//Create a folder for each deployment
-				deploymentName, _ := GetDeploymentReplicaSet(podName)
+				deploymentName, _ := utils.GetDeploymentReplicaSet(podName)
 
 				//FIND DEPLOYMENT AND PROJECT NAME
 				for _, a := range data {

@@ -61,7 +61,7 @@ func WriteJson(path, name string, data map[string]interface{}) error {
 	return nil
 }
 
-func createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
+func CreateJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
 	descriptionVolume, descriptionVolumeMount map[string]interface{}) map[string]interface{} {
 
 	var m map[string]interface{}

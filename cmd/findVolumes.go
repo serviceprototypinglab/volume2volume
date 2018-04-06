@@ -18,6 +18,7 @@ import (
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
 	"volume2volume/pkg/confObject"
+	"volume2volume/pkg/utils"
 )
 
 // findVolumesCmd represents the findVolumes command
@@ -59,7 +60,7 @@ func FindAllVolumes(cmd *cobra.Command, args []string){
 
 	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
-		app.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 		ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 
 	conf1 := confObject.ConfObject{PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,

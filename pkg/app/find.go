@@ -10,7 +10,7 @@ import (
 
 func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo  string,ObjectsOc []string) {
-	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	utils.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 	var cluster1 string
 	var project1 string
 	if cluster == "ClusterFrom"{
@@ -22,15 +22,15 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 	}
 
 	fmt.Println("USER -> " +  UsernameFrom)
-	loginCluster(cluster1, UsernameFrom, PasswordFrom)
+	utils.LoginCluster(cluster1, UsernameFrom, PasswordFrom)
 	os.Mkdir(PathData, os.FileMode(0777)) //All permission?
 	os.Mkdir(PathData + "/" + cluster, os.FileMode(0777))
 
-	changeProject(project1)
+	utils.ChangeProject(project1)
 
 	var dat map[string]interface{}
 	typeObject := "pods"
-	typeString := getObjects(typeObject)
+	typeString := utils.GetObjects(typeObject)
 	byt := []byte(typeString)
 	if err1 := json.Unmarshal(byt, &dat); err1 != nil {
 		fmt.Println("Error with the objects with type " + typeObject)
@@ -57,7 +57,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 
 				}
 				//Create a folder for each deployment
-				deploymentName, rsName := GetDeploymentReplicaSet(podName)
+				deploymentName, rsName := utils.GetDeploymentReplicaSet(podName)
 				os.Mkdir(PathData+ "/" + cluster +"/"+deploymentName, os.FileMode(0777))
 				os.Mkdir(PathData+ "/" + cluster +"/"+deploymentName+"/"+podName, os.FileMode(0777))
 				//fmt.Println(podName)
@@ -81,7 +81,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 										mountPath := volumesMountAux[k].(map[string]interface{})["mountPath"].(string)
 										pathVolume := PathData+ "/" + cluster +"/"+deploymentName+"/"+podName + "/" + volumeName
 										os.Mkdir(pathVolume, os.FileMode(0777))
-										aux := createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
+										aux := utils.CreateJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
 											descriptionVolume, descriptionVolumeMount)
 										a = append(a, aux)
 										pathRestic := pathVolume + "/restic"
