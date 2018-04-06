@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
+	"volume2volume/pkg/confObject"
 )
 
 // findVolumesCmd represents the findVolumes command
@@ -55,10 +56,20 @@ func init() {
 func FindAllVolumes(cmd *cobra.Command, args []string){
 	//var PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string
 	//var ObjectsOc []string
-	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom,
-	PasswordTo, ObjectsOc = app.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+
+	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
+		app.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 		ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+
+	conf1 := confObject.ConfObject{PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc}
+	fmt.Println("conf1 -->")
+	fmt.Println(conf1)
+
 	app.FindVolumes("ClusterFrom", PathTemplate, PathData, ClusterFrom, ClusterTo,
 		ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
-	//app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
+
+	//app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+	// ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
 }

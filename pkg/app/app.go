@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
 	"encoding/json"
 	"github.com/spf13/viper"
@@ -42,6 +41,7 @@ func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectT
 
 //---------
 
+//in utils
 func GetTypeObjects(ObjectsOc, ObjectsTypes []string) []string {
 	// List of type of objects to export
 	if len(ObjectsTypes) == 0 {
@@ -63,6 +63,7 @@ func GetTypeObjects(ObjectsOc, ObjectsTypes []string) []string {
 
 }
 
+//in utils
 func GetValueFromConfig(s string) interface{} {
 	home, err := homedir.Dir()
 	if err != nil {
@@ -82,6 +83,7 @@ func GetValueFromConfig(s string) interface{} {
 	return ""
 }
 
+//in utils
 func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 	keys := []string{"pathtemplate","pathdata","objects","clusterto", "clusterfrom","projectto", "projectfrom",
@@ -146,6 +148,7 @@ func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, Proj
 	}
 }
 
+//in utils
 func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) (string, string, string, string,
 		string, string, string, string, string, string, []string) {
@@ -212,6 +215,7 @@ func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo
 	return PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc
 }
 
+//in utils
 func GetDeploymentReplicaSet(pod string) (string, string) {
 	auxString := strings.Split(pod, "-")
 	deploymentName := auxString[0]
@@ -219,19 +223,8 @@ func GetDeploymentReplicaSet(pod string) (string, string) {
 	return deploymentName, replicaSetName
 }
 
-func ExportDataFromVolume(pod string, path string, mountPath string) {
-	a := "oc rsync " + pod + ":" + mountPath + "/" +  " " + path + "/data"
-	//fmt.Println(a)
-	cmdExportData := exec.Command("oc", "rsync", pod + ":" + mountPath + "/", path + "/data")
-	cmdExportOut, err := cmdExportData.Output()
-	if err != nil {
-		fmt.Println("Error migrating " + a)
-		fmt.Println(err)
-	} else {
-		fmt.Println(string(cmdExportOut))
-	}
-}
 
+// in utils
 func createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
 	descriptionVolume, descriptionVolumeMount map[string]interface{}) map[string]interface{} {
 
@@ -265,6 +258,7 @@ func createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentNa
 	return m
 }
 
+//in utils
 func loginCluster(cluster, username, password string) {
 	username = "--username=" + username
 	password = "--password=" + password
@@ -276,6 +270,8 @@ func loginCluster(cluster, username, password string) {
 	fmt.Println(string(CmdOut))
 }
 
+
+//in utils
 func changeProject(projectName string) {
 	CmdProject := exec.Command("oc", "project", projectName)
 	CmdProjectOut, err := CmdProject.Output()
@@ -283,6 +279,8 @@ func changeProject(projectName string) {
 	fmt.Println(string(CmdProjectOut))
 }
 
+
+//in utils
 func checkErrorMessage(err error, message string){
 	if err != nil {
 
@@ -293,6 +291,7 @@ func checkErrorMessage(err error, message string){
 	}
 }
 
+// in utils
 func getObjects(typeObject string) string {
 	CmdGetDeployments := exec.Command("oc", "get", typeObject, "-o", "json")
 	CmdOut, err := CmdGetDeployments.Output()
@@ -304,222 +303,10 @@ func getObjects(typeObject string) string {
 	return string(CmdOut)
 }
 
-func ExportData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
-	ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 
 
-	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	loginCluster(ClusterFrom, UsernameFrom, PasswordFrom)
-	os.Mkdir(PathData, os.FileMode(0777)) //All permision??
-	changeProject(ProjectFrom)
-
-	var dat map[string]interface{}
-	typeObject := "pods"
-	typeString := getObjects(typeObject)
-	byt := []byte(typeString)
-	if err1 := json.Unmarshal(byt, &dat); err1 != nil {
-		fmt.Println("Error with the objects with type " + typeObject)
-		fmt.Println("-------")
-		if typeString != "" {
-			fmt.Println(typeString)
-		}
-	} else {
-		items := dat["items"].([]interface{})
-		if len(items) > 0 {
-			os.Mkdir(PathData, os.FileMode(0777))
-
-			var a [] map[string]interface{}
-
-			//Take the name of the object
-			for i := range items {
-				var podName string
-				nameObjectOsAux, ok :=
-					items[i].(map[string]interface{})["metadata"].(map[string]interface{})["name"].(string)
-				if ok {
-					podName = nameObjectOsAux
-				} else {
-					podName = typeObject + string(i)
-
-				}
-				//Create a folder for each deployment
-				deploymentName, rsName := GetDeploymentReplicaSet(podName)
-				os.Mkdir(PathData+"/"+deploymentName, os.FileMode(0777))
-				os.Mkdir(PathData+"/"+deploymentName+"/"+podName, os.FileMode(0777))
-				//fmt.Println(podName)
-				var volumeName string
-				volumesAux, ok :=
-					items[i].(map[string]interface{})["spec"].(map[string]interface{})["volumes"].([]interface{})
-				if ok {
-					for j := range volumesAux {
-						volumeName = volumesAux[j].(map[string]interface{})["name"].(string)
-						//fmt.Println(volumeName)
-						descriptionVolume := volumesAux[j].(map[string]interface{})
-						//fmt.Println(descriptionVolume)
-						volumesMountAuxs, ok1 := items[i].(map[string]interface{})["spec"].(map[string]interface{})["containers"].([]interface{})
-						for u := range volumesMountAuxs {
-							if ok1 {
-								volumesMountAux := volumesMountAuxs[u].(map[string]interface{})["volumeMounts"].([]interface{})
-								for k := range volumesMountAux {
-									nameVolumeMount := volumesMountAux[k].(map[string]interface{})["name"].(string)
-									if nameVolumeMount == volumeName {
-										descriptionVolumeMount := volumesMountAux[k].(map[string]interface{})
-										mountPath := volumesMountAux[k].(map[string]interface{})["mountPath"].(string)
-										pathVolume := PathData+"/"+deploymentName+"/"+podName + "/" + volumeName
-										os.Mkdir(pathVolume, os.FileMode(0777))
-										aux := createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
-											descriptionVolume, descriptionVolumeMount)
-										a = append(a, aux)
-										os.Mkdir(pathVolume + "/data", os.FileMode(0777))
-										//ExportDataFromVolume(podName, pathVolume, mountPath)
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			f, err3 := os.Create(PathData +"/data.json")
-			if err3 != nil {
-				fmt.Println("Error creating data.json")
-				fmt.Println(err3)
-			} else {
-				objectOs, err2 := json.Marshal(a)
-				if err2 != nil {
-					fmt.Println("Error creating the json object")
-
-					fmt.Println(err2)
-				} else {
-					f.WriteString(string(objectOs))
-					f.Sync()
-					fmt.Println("Created  data.json in" + PathData )
-				}
-			}
-		} else {
-			fmt.Println("No objects for the type " + typeObject)
-		}
-	}
-}
-
-//"----------- UP --------"
-func createRecovery(){
-
-	// find all pairs of volumes and Resict objects
-
-	// create the proper recovery object
 
 
-}
 
-func UpData(cmd *cobra.Command, args []string, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
-	ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
-
-	GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	loginCluster(ClusterTo, UsernameTo, PasswordTo)
-	os.Mkdir(PathData, os.FileMode(0777)) //All permission??
-	changeProject(ProjectTo)
-
-
-	data := utils.ReadJsonData("./volumes")
-
-	var dat map[string]interface{}
-	typeObject := "pods"
-	typeString := getObjects(typeObject)
-	byt := []byte(typeString)
-	if err1 := json.Unmarshal(byt, &dat); err1 != nil {
-		fmt.Println("Error with the objects with type " + typeObject)
-		fmt.Println("-------")
-		if typeString != "" {
-			fmt.Println(typeString)
-		}
-	} else {
-		items := dat["items"].([]interface{})
-		if len(items) > 0 {
-			//Take the name of the object
-			for i := range items {
-				var podName string
-				nameObjectOsAux, ok :=
-					items[i].(map[string]interface{})["metadata"].
-					(map[string]interface{})["name"].(string)
-				if ok {
-					podName = nameObjectOsAux
-				} else {
-					podName = typeObject + string(i)
-
-				}
-				//Create a folder for each deployment
-				deploymentName, _ := GetDeploymentReplicaSet(podName)
-
-				//FIND DEPLOYMENT AND PROJECT NAME
-				for _, a := range data {
-					if a["deploymentName"] == deploymentName {
-						path := "./volumes/" + deploymentName + "/" + a["podName"].(string) + "/" +
-							a["volumeName"].(string)
-						mountPath := a["mountPath"].(string)
-						UpDataToVolume(podName, path, mountPath)
-					}
-				}
-				/*
-					for _, v := range listDeployments() {
-						deployment := getDeploymentName(v)
-						if deployment == deploymentName {
-							for _, podName := range listPods(deploymentName) {
-
-								volumes := listVolumes(deploymentName+"/"+getPodNameFromPath(podName))
-								for _, volumePath := range volumes {
-									fmt.Println(volumePath)
-								}
-							}
-						}
-					}
-					//fmt.Println(podName)
-					/*var volumeName string
-					volumesAux, ok :=
-						items[i].(map[string]interface{})["spec"].(map[string]interface{})["volumes"].([]interface{})
-					if ok {
-						for j := range volumesAux {
-							volumeName = volumesAux[j].(map[string]interface{})["name"].(string)
-							//fmt.Println(volumeName)
-							descriptionVolume := volumesAux[j].(map[string]interface{})
-							//fmt.Println(descriptionVolume)
-							volumesMountAuxs, ok1 := items[i].(map[string]interface{})["spec"].(map[string]interface{})["containers"].([]interface{})
-							for u := range volumesMountAuxs {
-								if ok1 {
-									volumesMountAux := volumesMountAuxs[u].(map[string]interface{})["volumeMounts"].([]interface{})
-									for k := range volumesMountAux {
-										nameVolumeMount := volumesMountAux[k].(map[string]interface{})["name"].(string)
-										if nameVolumeMount == volumeName {
-											descriptionVolumeMount := volumesMountAux[k].(map[string]interface{})
-											mountPath := volumesMountAux[k].(map[string]interface{})["mountPath"].(string)
-											pathVolume := PathData+"/"+deploymentName+"/"+podName + "/" + volumeName
-											os.Mkdir(pathVolume, os.FileMode(0777))
-											createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
-												descriptionVolume, descriptionVolumeMount)
-											os.Mkdir(pathVolume + "/data", os.FileMode(0777))
-											exportDataFromVolume(podName, pathVolume, mountPath)
-										}
-									}
-								}
-							}
-						}
-					}*/
-			}
-		} else {
-			fmt.Println("No objects for the type " + typeObject)
-		}
-	}
-}
-
-func UpDataToVolume(podName, path, mountPath string) {
-	a := "oc rsync " +  path + "/data/"  +  " " + podName + ":" + mountPath + "/"
-	fmt.Println(a)
-	cmdUpData := exec.Command("oc", "rsync", path + "/data/", podName + ":" + mountPath + "/")
-	cmdUpOut, err := cmdUpData.Output()
-	if err != nil {
-		fmt.Println("Error migrating " + a)
-		fmt.Println(err)
-	} else {
-		fmt.Println(string(cmdUpOut))
-	}
-}
 
 //END

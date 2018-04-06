@@ -84,9 +84,10 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 										aux := createJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
 											descriptionVolume, descriptionVolumeMount)
 										a = append(a, aux)
-										os.Mkdir(pathVolume + "/data", os.FileMode(0777))
+										pathRestic := pathVolume + "/restic"
+										os.Mkdir(pathRestic, os.FileMode(0777))
 										//TODO create restic
-										createRestic(volumeName, deploymentName, mountPath)
+										createRestic(ProjectFrom, volumeName, deploymentName, mountPath, pathRestic)
 										//ExportDataFromVolume(podName, pathVolume, mountPath)
 									}
 								}
@@ -118,19 +119,54 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 
 
 
-func createRestic(volumeName, deploymentName, mountPath string) {
+func createRestic(namespace, volumeName, deploymentName, mountPath, pathRestic string) {
 	/*type restic struct {
 ReadJsonData
 	}*/
 
-	restic := utils.ReadJson("restic", "restic_template")
+	restic := utils.ReadJson("templates", "restic_template")
 	fmt.Println(restic)
-	//Change volumename
-
-	//Change deploymentNAme
-
+	//Change name
+	auxName := "restic-" + deploymentName
+	fmt.Println("name -->")
+	restic["metadata"].(map[string]interface{})["name"] = auxName
+	//fmt.Println(restic["metadata"].(map[string]interface{})["name"].(string))
+	//Change namespace
+	restic["metadata"].(map[string]interface{})["namespace"] = namespace
+	//Change volumeName
+	restic["spec"].(map[string]interface{})["volumeMounts"].([]interface{})[0].(map[string]interface{})["name"] = volumeName
+	//Change deploymentName
+	restic["spec"].(map[string]interface{})["volumeMounts"].([]interface{})[0].(map[string]interface{})["mountPath"] = mountPath
 	//change mountPath
-}
+	restic["spec"].(map[string]interface{})["fileGroups"].([]interface{})[0].(map[string]interface{})["path"] = mountPath
+
+	fmt.Println(restic)
+    // TODO
+    // Backend -> local, s3, glusterFS, ...
+
+	err := utils.WriteJson(pathRestic, "restic", restic)
+	if err != nil {
+		fmt.Println("Error creating " + auxName)
+	}
+    //write json in path restic
+	/*f, err3 := os.Create(pathRestic +"/restic.json")
+	if err3 != nil {
+		fmt.Println("Error creating data.json")
+		fmt.Println(err3)
+	} else {
+		objectOs, err2 := json.Marshal(restic)
+		if err2 != nil {
+			fmt.Println("Error creating the json object")
+
+			fmt.Println(err2)
+		} else {
+			f.WriteString(string(objectOs))
+			f.Sync()
+			fmt.Println("Created  data.json in" + pathRestic )
+		}*/
+	}
+
+
 
 
 
