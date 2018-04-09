@@ -71,7 +71,7 @@ ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsO
 										mountPath := volumesMountAux[k].(map[string]interface{})["mountPath"].(string)
 										pathVolume := PathData+"/"+deploymentName+"/"+podName + "/" + volumeName
 										os.Mkdir(pathVolume, os.FileMode(0777))
-										aux := utils.CreateJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
+										aux := CreateDescription("ClusterFrom", pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
 											descriptionVolume, descriptionVolumeMount)
 										a = append(a, aux)
 										os.Mkdir(pathVolume + "/data", os.FileMode(0777))

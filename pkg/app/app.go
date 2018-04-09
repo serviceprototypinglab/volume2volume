@@ -15,7 +15,8 @@ func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectT
 	//Read  Volumes/ClusterFrom/data.json
 	var from [] map[string]interface{}
 	var to [] map[string]interface{}
-	utils.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	utils.GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 	clusterFromVolumes := utils.ReadJsonData(PathData + "/ClusterFrom")
 	clusterToVolumes := utils.ReadJsonData(PathData + "/ClusterTo")
 	fmt.Println("read it")

@@ -8,7 +8,7 @@ import (
 func LoginCluster(cluster, username, password string) {
 	username = "--username=" + username
 	password = "--password=" + password
-	CmdLogin := exec.Command("oc", "login", cluster, username, password)
+	CmdLogin := exec.Command("oc", "login", cluster, username, password, "--insecure-skip-tls-verify=true")
 	//CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin")
 	CmdOut, err := CmdLogin.Output()
 	fmt.Println(string(CmdOut))

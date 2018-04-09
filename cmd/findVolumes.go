@@ -71,6 +71,6 @@ func FindAllVolumes(cmd *cobra.Command, args []string){
 	app.FindVolumes("ClusterFrom", PathTemplate, PathData, ClusterFrom, ClusterTo,
 		ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
 
-	//app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
-	// ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
+	app.FindVolumes("ClusterTo", PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+	 ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo ,ObjectsOc)
 }

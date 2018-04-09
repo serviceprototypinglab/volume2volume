@@ -61,35 +61,3 @@ func WriteJson(path, name string, data map[string]interface{}) error {
 	return nil
 }
 
-func CreateJson(pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
-	descriptionVolume, descriptionVolumeMount map[string]interface{}) map[string]interface{} {
-
-	var m map[string]interface{}
-	m = make(map[string]interface{})
-	m["pathVolume"] = pathVolume
-	m["volumeName"] = volumeName
-	m["podName"] = podName
-	m["mountPath"] = mountPath
-	m["rsName"] = rsName
-	m["deploymentName"] = deploymentName
-	m["descriptionVolume"] = descriptionVolume
-	m["descriptionVolumeMount"] = descriptionVolumeMount
-
-	f, err3 := os.Create(pathVolume + "/data.json")
-
-	if err3 != nil {
-		fmt.Println("Error creating data.json")
-		fmt.Println(err3)
-	} else {
-		objectOs, err2 := json.Marshal(m)
-		if err2 != nil {
-			fmt.Println("Error creating the json object")
-			fmt.Println(err2)
-		} else {
-			f.WriteString(string(objectOs))
-			f.Sync()
-			fmt.Println("Created  data.json in " + pathVolume)
-		}
-	}
-	return m
-}
