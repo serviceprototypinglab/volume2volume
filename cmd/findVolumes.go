@@ -32,10 +32,10 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		app.Example()
 		fmt.Println("findVolumes called")
 		FindAllVolumes(cmd, args)
-		//a,b := app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+		a,b := app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+		app.Pair(a, b)
 		//fmt.Println(a[0]["podName"])
 		//fmt.Println("---")
 		//fmt.Println(b[0]["podName"])
