@@ -1,21 +1,15 @@
-{"apiVersion": "stash.appscode.com/v1alpha1",
-  "kind": "Restic",
+{
+  "apiVersion": "stash.appscode.com/v1alpha1",
+  "kind": "Recovery",
   "metadata": {
-    "name": "stash-restic-mongo",
+    "name": "stash-recovery-mongo",
     "namespace": "default"
   },
   "spec": {
-    "selector": {
-      "matchLabels": {
-        "app": "arkismongopersistentd0"
-      }
+    "workload": {
+      "kind": "Deployment",
+      "name": "arkismongopersistentd0"
     },
-    "fileGroups": [
-      {
-        "path": "/data/db",
-        "retentionPolicyName": "keep-last-2"
-      }
-    ],
     "backend": {
       "s3": {
         "endpoint": "s3.amazonaws.com",
@@ -23,18 +17,14 @@
       },
       "storageSecretName": "s3-secret"
     },
-    "schedule": "@yearly",
-    "volumeMounts": [
+    "paths": [
+      "/data/db"
+    ],
+    "recoveredVolumes": [
       {
         "mountPath": "/data/db",
-        "name": "mongo-persistent-storage"
-      }
-    ],
-    "retentionPolicies": [
-      {
-        "name": "keep-last-2",
-        "keepLast": 2,
-        "prune": true
+        "emptyDir": {
+        }
       }
     ]
   }

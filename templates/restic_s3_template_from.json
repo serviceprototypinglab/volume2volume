@@ -23,7 +23,7 @@
       },
       "storageSecretName": "s3-secret"
     },
-    "schedule": "@yearly",
+    "schedule": "@every 2m",
     "volumeMounts": [
       {
         "mountPath": "/data/db",

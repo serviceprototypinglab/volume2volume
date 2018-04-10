@@ -207,6 +207,7 @@ func CreateRestic(cluster, namespace, volumeName, deploymentName, mountPath, pat
 ReadJsonData
 	}*/
 
+
 	var restic map[string]interface{}
 	var nameRestic string
 	// TODO Backend -> local, s3, glusterFS, ...
@@ -226,6 +227,8 @@ ReadJsonData
 	//fmt.Println(restic["metadata"].(map[string]interface{})["name"].(string))
 	//Change namespace
 	restic["metadata"].(map[string]interface{})["namespace"] = namespace
+
+	restic["spec"].(map[string]interface{})["selector"].(map[string]interface{})["matchLabels"].(map[string]interface{})["app"] = deploymentName
 	//Change volumeName
 	restic["spec"].(map[string]interface{})["volumeMounts"].([]interface{})[0].(map[string]interface{})["name"] = volumeName
 	//Change deploymentName
@@ -243,7 +246,6 @@ ReadJsonData
 }
 
 func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic string) {
-	// TODO
 	var recovery map[string]interface{}
 	var nameRecovery string
 	// TODO Backend -> local, s3, glusterFS, ...
@@ -255,16 +257,21 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 		nameRecovery = "recoveryTo"
 	}
 
-
-	// TODO
-
+	// Change namespace, name,
 	auxName := "recovery-" + deploymentName
+	recovery["metadata"].(map[string]interface{})["name"] = auxName
+	recovery["metadata"].(map[string]interface{})["namespace"] = namespace
+	recovery["spec"].(map[string]interface{})["workload"].(map[string]interface{})["name"] = volumeName
+	recovery["spec"].(map[string]interface{})["paths"].([]interface{})[0] = mountPath
+	recovery["spec"].(map[string]interface{})["recoveredVolumes"].([]interface{})[0].(map[string]interface{})["mountPath"] = mountPath
+
 	err := utils.WriteJson(pathRestic, nameRecovery, recovery)
 	if err != nil {
 		fmt.Println("Error creating " + auxName)
 	}
 }
 
+// TODO
 func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic string) {
 	// TODO
 	var stats map[string]interface{}

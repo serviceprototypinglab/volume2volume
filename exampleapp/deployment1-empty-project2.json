@@ -1,0 +1,54 @@
+{
+  "kind": "Deployment",
+  "apiVersion": "extensions/v1beta1",
+  "metadata": {
+    "name": "deployment1",
+    "namespace": "project2",
+    "creationTimestamp": null,
+    "labels": {
+      "app": "deployment1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "service": "deployment1"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "deployment1",
+            "image": "mongo",
+            "ports": [
+              {
+                "containerPort": 27017,
+                "protocol": "TCP"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "name": "deployment1-persistent-storage",
+                "mountPath": "/data/db"
+              }
+            ],
+            "resources": {}
+          }
+        ],
+        "volumes": [
+          {
+            "name": "deployment1-persistent-storage",
+            "emptyDir": {}
+
+          }
+        ],
+        "restartPolicy": "Always"
+      }
+    },
+    "strategy": {}
+  },
+  "status": {}
+}
