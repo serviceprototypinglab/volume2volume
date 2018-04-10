@@ -36,7 +36,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 	utils.ChangeProject(project1)
 
 
-	// Get deployments
+	// Get pods
 	var dat map[string]interface{}
 	typeObject := "pods"
 	typeString := utils.GetObjects(typeObject)
@@ -111,7 +111,15 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 					}
 				}
 			}
-			f, err3 := os.Create(PathData + "/" + cluster +"/data.json")
+
+
+			// TODO CHANGE THAT ALSO
+			err1 := utils.WriteJsonArray(PathData + "/" + cluster, "data", a)
+			if err1 != nil {
+				fmt.Println("Error creating " + "description")
+			}
+
+			/*f, err3 := os.Create(PathData + "/" + cluster +"/data.json")
 			if err3 != nil {
 				fmt.Println("Error creating data.json")
 				fmt.Println(err3)
@@ -125,7 +133,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 					f.Sync()
 					fmt.Println("Created  data.json in " + PathData + "/" + cluster  )
 				}
-			}
+			}*/
 		} else {
 			fmt.Println("No objects for the type " + typeObject)
 		}
@@ -155,10 +163,10 @@ func CreateDescription(cluster, pathVolume, volumeName, podName, mountPath, rsNa
 	m["descriptionVolumeMount"] = descriptionVolumeMount
 
 
-	err := utils.WriteJson(pathVolume, "data", m)
+	/*err := utils.WriteJson(pathVolume, "data", m)
 	if err != nil {
 		fmt.Println("Error creating " + "data")
-	}
+	}*/
 
 	err1 := utils.WriteJson(pathVolume, nameJson, m)
 	if err1 != nil {

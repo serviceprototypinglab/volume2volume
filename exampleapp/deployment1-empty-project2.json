@@ -31,7 +31,7 @@
             ],
             "volumeMounts": [
               {
-                "name": "deployment1-persistent-storage",
+                "name": "deployment1-storage",
                 "mountPath": "/data/db"
               }
             ],
@@ -40,7 +40,7 @@
         ],
         "volumes": [
           {
-            "name": "deployment1-persistent-storage",
+            "name": "deployment1-storage",
             "emptyDir": {}
 
           }

@@ -16,10 +16,12 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 	clusterFromVolumes := utils.ReadJsonData(PathData + "/ClusterFrom")
 	clusterToVolumes := utils.ReadJsonData(PathData + "/ClusterTo")
 	fmt.Println("read it")
+
 	for _,v := range clusterFromVolumes {
 		for _,k := range clusterToVolumes {
 			if v["deploymentName"] == k["deploymentName"] {
 				if v["volumeName"] == k["volumeName"] {
+					fmt.Println("PAIR!!!!!")
 					fmt.Println(v["volumeName"])
 					from = append(from, v)
 					to = append(to, k)
@@ -31,8 +33,9 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 }
 
 func Pair(from, to [] map[string]interface{}) {
+	// TODO
 	for i, v := range from {
-		fmt.Println("volume -> %d", i)
+		fmt.Println("volume -> ", i)
 		fmt.Println(v)
 		fmt.Println(to[i])
 	}

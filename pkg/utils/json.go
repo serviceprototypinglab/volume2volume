@@ -61,3 +61,26 @@ func WriteJson(path, name string, data map[string]interface{}) error {
 	return nil
 }
 
+func WriteJsonArray(path, name string, data []map[string]interface{}) error {
+	//write json in path restic
+	f, err3 := os.Create(path +"/"+ name +".json")
+	if err3 != nil {
+		fmt.Println("Error creating data.json")
+		fmt.Println(err3)
+		return err3
+	} else {
+		objectOs, err2 := json.Marshal(data)
+		if err2 != nil {
+			fmt.Println("Error creating the json object")
+
+			fmt.Println(err2)
+			return err2
+		} else {
+			f.WriteString(string(objectOs))
+			f.Sync()
+			fmt.Println("Created  data.json in" + path )
+		}
+	}
+	return nil
+}
+
