@@ -16,6 +16,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"volume2volume/pkg/app"
 )
 
 // migrateCmd represents the migrate command
@@ -30,6 +31,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("migrate called")
+		migrateData(cmd, args)
 	},
 }
 
@@ -50,6 +52,7 @@ func init() {
 func migrateData(cmd *cobra.Command, args []string){
 	//TODO  migrate list of volumes in parallel
 	//downData(cmd, args)
+	app.Migrate()
 }
 
 
