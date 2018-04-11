@@ -34,8 +34,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("findVolumes called")
 		FindAllVolumes(cmd, args)
-		a,b := app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-		app.Pair(a, b)
+		app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 		//fmt.Println(a[0]["podName"])
 		//fmt.Println("---")
 		//fmt.Println(b[0]["podName"])
