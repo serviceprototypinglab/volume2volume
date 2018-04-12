@@ -7,6 +7,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"volume2volume/pkg/confObject"
 	"strings"
+	"reflect"
 )
 
 // GET CONFIGURATION
@@ -311,4 +312,25 @@ func GetDeploymentReplicaSet(pod string) (string, string) {
 	deploymentName := auxString[0]
 	replicaSetName := deploymentName + "-" + auxString[1]
 	return deploymentName, replicaSetName
+}
+
+
+func In_array(val interface{}, array interface{}) (exists bool, index int) {
+	exists = false
+	index = -1
+
+	switch reflect.TypeOf(array).Kind() {
+	case reflect.Slice:
+		s := reflect.ValueOf(array)
+
+		for i := 0; i < s.Len(); i++ {
+			if reflect.DeepEqual(val, s.Index(i).Interface()) == true {
+				index = i
+				exists = true
+				return
+			}
+		}
+	}
+
+	return
 }

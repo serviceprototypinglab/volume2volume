@@ -22,6 +22,7 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 	clusterToVolumes := utils.ReadJsonData(PathData + "/ClusterTo")
 	fmt.Println("read it")
 
+	var pairs []map[string]interface{}
 	for _,v := range clusterFromVolumes {
 		for _,k := range clusterToVolumes {
 			if v["deploymentName"] == k["deploymentName"] {
@@ -33,19 +34,29 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 					pathFrom := v["pathVolume"].(string)
 					pathTo := k["pathVolume"].(string)
 					deploymentName := v["deploymentName"].(string)
+
 					os.Mkdir(PathData + "/pairs", os.FileMode(0777))
 					os.Mkdir(PathData + "/pairs/" + deploymentName, os.FileMode(0777))
+
 					copy(pathFrom , PathData + "/pairs/" + deploymentName)
 					copy(pathTo , PathData + "/pairs/" + deploymentName)
+					var pair map[string]interface{}
+					pair = make(map[string]interface{})
+					pair["deploymentName"] = v["deploymentName"]
+					pair["volumeName"] = v["volumeName"]
+					ok, _ := utils.In_array(pair, pairs)
+					if !ok {
+						pairs = append(pairs, pair)
+					}
+
+
 				}
 			}
 		}
 	}
+	utils.WriteJsonArray(PathData + "/pairs/", "pairs", pairs)
 	return from, to
 }
-
-
-
 
 func copy(srcFolder string, destFolder string) {
 	// Read all content of src to data

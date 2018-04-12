@@ -38,6 +38,21 @@ func ReadJsonData(path string) []map[string]interface{} {
 	return data
 }
 
+func ReadJsonArray(path, name string) []map[string]interface{} {
+	fmt.Println(path)
+	plan, _ := ioutil.ReadFile(path + "/" + name + ".json")
+	//fmt.Println(plan)
+	//var data []interface{}
+	var data []map[string]interface{}
+	err := json.Unmarshal(plan, &data)
+	if err != nil {
+		fmt.Println("error reading json")
+		//fmt.Println(data)
+		fmt.Println(err)
+	}
+	return data
+}
+
 func WriteJson(path, name string, data map[string]interface{}) error {
 	//write json in path restic
 	f, err3 := os.Create(path +"/"+ name +".json")
