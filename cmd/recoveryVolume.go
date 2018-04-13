@@ -15,14 +15,13 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
-	"volume2volume/pkg/utils"
-	"volume2volume/pkg/app"
 )
 
-// backUpVolumeCmd represents the backUpVolume command
-var backUpVolumeCmd = &cobra.Command{
-	Use:   "backUpVolume",
+// recoveryVolumeCmd represents the recoveryVolume command
+var recoveryVolumeCmd = &cobra.Command{
+	Use:   "recoveryVolume",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -31,28 +30,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("backUpVolume called")
-		// TODO. Take names from configuration. Using flags for deploymentName, volumeName.
-		deploymentName := "deployment1"
-		volumeName := "deployment1-storage"
-		PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
-			UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
-			utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
-				ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-		app.BackUpVolume(PathData, deploymentName, volumeName)
+		fmt.Println("recoveryVolume called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(backUpVolumeCmd)
+	RootCmd.AddCommand(recoveryVolumeCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// backUpVolumeCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// recoveryVolumeCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// backUpVolumeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// recoveryVolumeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
