@@ -58,6 +58,7 @@ func init() {
 
 // Identify the version of the cluster and create the proper stash version.
 func configureCluster(cluster string) {
-	// TODO
+	// TODO add support to the restic,recovery objects to the cluster and secrets
+
 	fmt.Println(cluster)
 }

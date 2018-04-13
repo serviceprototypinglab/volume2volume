@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
+	"volume2volume/pkg/utils"
 )
 
 // migrateCmd represents the migrate command
@@ -52,7 +53,11 @@ func init() {
 func migrateData(cmd *cobra.Command, args []string){
 	//TODO  migrate list of volumes in parallel
 	//downData(cmd, args)
-	app.Migrate()
+	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
+		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	app.Migrate(PathData)
 }
 
 

@@ -15,9 +15,9 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
+	"volume2volume/pkg/utils"
 )
 
 // migrateVolumeCmd represents the migrateVolume command
@@ -37,7 +37,14 @@ to quickly create a Cobra application.`,
 }
 
 func MigrateVolume(command *cobra.Command, strings []string) {
-	app.MigrateVolume("deploymentName", "volumeName")
+	// TODO. Take names from configuration
+	deploymentName := "deployment1"
+	volumeName := "deployment1-storage"
+	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
+		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+	app.MigrateVolume(PathData, deploymentName, volumeName)
 }
 
 func init() {

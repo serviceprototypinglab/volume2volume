@@ -13,11 +13,11 @@ func ShowVolumes(PathData string) {
 	fmt.Println("PAIRS OF VOLUMES")
 	fmt.Println("-------*------")
 	for _, v := range pairs {
-		printVolumes(v)
+		PrintVolumes(v)
 	}
 }
 
-func printVolumes(v map[string]interface{}) {
+func PrintVolumes(v map[string]interface{}) {
 	fmt.Print("DEPLOYMENT -> ")
 	fmt.Println(v["deploymentName"].(string))
 	fmt.Print("VOLUME -> ")
