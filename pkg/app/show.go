@@ -10,6 +10,7 @@ func ShowVolumes(PathData string) {
 	var pairs []map[string]interface{}
 
 	pairs = utils.ReadJsonArray(PathData + "/pairs/", "pairs")
+
 	fmt.Println("PAIRS OF VOLUMES")
 	fmt.Println("-------*------")
 	for _, v := range pairs {
@@ -22,5 +23,9 @@ func PrintVolumes(v map[string]interface{}) {
 	fmt.Println(v["deploymentName"].(string))
 	fmt.Print("VOLUME -> ")
 	fmt.Println(v["volumeName"].(string))
+	fmt.Print("DATA TYPE -> ")
+	fmt.Println(v["dataTypeFrom"].(string))
+	fmt.Print("SIZE -> ")
+	fmt.Println(v["sizeFrom"].(string))
 	fmt.Println("-------*------")
 }

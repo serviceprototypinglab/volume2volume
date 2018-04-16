@@ -38,12 +38,18 @@ secret_s3.txt
 ./stash/secret_s3.txt
 ./stash/AWS_ACCESS_KEY_ID
 ./stash/AWS_SECRET_ACCESS_KEY
+./stash/secret_minio.txt
+./stash/MINIO_ACCESS_KEY_ID
+./stash/MINIO_SECRET_ACCESS_KEY
 ./stash/RESTIC_PASSWORD
 
 /stash/secret_s3.txt
 /stash/AWS_ACCESS_KEY_ID
 /stash/AWS_SECRET_ACCESS_KEY
+/stash/secret_minio.txt
+/stash/MINIO_ACCESS_KEY_ID
+/stash/MINIO_SECRET_ACCESS_KEY
 /stash/RESTIC_PASSWORD
-/stash/RESTIC_PASSWORD
+
 
 

@@ -1,0 +1,31 @@
+{
+  "apiVersion": "stash.appscode.com/v1alpha1",
+  "kind": "Recovery",
+  "metadata": {
+    "name": "stash-recovery-mongo",
+    "namespace": "default"
+  },
+  "spec": {
+    "workload": {
+      "kind": "Deployment",
+      "name": "arkismongopersistentd0"
+    },
+    "backend": {
+      "s3": {
+        "endpoint": "http://160.85.164.170:9000",
+        "bucket": "ramzrestic"
+      },
+      "storageSecretName": "minio-secret"
+    },
+    "paths": [
+      "/data/db"
+    ],
+    "recoveredVolumes": [
+      {
+        "mountPath": "/data/db",
+        "emptyDir": {
+        }
+      }
+    ]
+  }
+}

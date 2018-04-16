@@ -1,0 +1,41 @@
+{"apiVersion": "stash.appscode.com/v1alpha1",
+  "kind": "Restic",
+  "metadata": {
+    "name": "stash-restic-mongo",
+    "namespace": "default"
+  },
+  "spec": {
+    "selector": {
+      "matchLabels": {
+        "app": "arkismongopersistentd0"
+      }
+    },
+    "fileGroups": [
+      {
+        "path": "/data/db",
+        "retentionPolicyName": "keep-last-2"
+      }
+    ],
+    "backend": {
+      "s3": {
+        "endpoint": "http://160.85.164.170:9000",
+        "bucket": "ramzrestic"
+      },
+      "storageSecretName": "minio-secret"
+    },
+    "schedule": "@every 2m",
+    "volumeMounts": [
+      {
+        "mountPath": "/data/db",
+        "name": "mongo-persistent-storage"
+      }
+    ],
+    "retentionPolicies": [
+      {
+        "name": "keep-last-2",
+        "keepLast": 2,
+        "prune": true
+      }
+    ]
+  }
+}

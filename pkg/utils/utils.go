@@ -334,3 +334,4 @@ func In_array(val interface{}, array interface{}) (exists bool, index int) {
 
 	return
 }
+

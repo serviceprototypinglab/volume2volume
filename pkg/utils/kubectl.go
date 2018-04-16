@@ -16,3 +16,13 @@ func CreateObject(path string) {
 	//fmt.Println(string(CmdOut))
 
 }
+
+
+func GetSizeVolume(podName, containerName, pathData string) string{
+	CmdCreate := exec.Command("kubectl", "exec", podName, "--", "du", "-sh", pathData)
+	CmdOut, err := CmdCreate.Output()
+	fmt.Println(string(CmdOut))
+	CheckErrorMessage(err, "Error running kubectl exec")
+	return string(CmdOut)
+	//kubectl exec arkismongopersistentd0-3083001275-lwn8w -- du -sh ./data/db
+}

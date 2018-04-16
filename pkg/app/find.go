@@ -65,6 +65,17 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 					podName = typeObject + string(i)
 
 				}
+
+				var dataType string
+				dataTypeAux, ok :=
+					items[i].(map[string]interface{})["metadata"].(map[string]interface{})["labels"].(map[string]interface{})["v2v"].(string)
+				if ok {
+					fmt.Println("---------------->" + dataTypeAux)
+					dataType = dataTypeAux
+				} else {
+					dataType = "Not Found"
+
+				}
 				//Create a folder for each deployment
 				deploymentName, rsName := utils.GetDeploymentReplicaSet(podName)
 				os.Mkdir(PathData+ "/" + cluster +"/"+deploymentName, os.FileMode(0777))
@@ -93,17 +104,18 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 										os.Mkdir(pathVolume, os.FileMode(0777))
 
 										// Create description
-										aux := CreateDescription(cluster, pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
+										aux := CreateDescription(dataType, cluster, pathVolume, volumeName, podName, mountPath, rsName, deploymentName,
 											descriptionVolume, descriptionVolumeMount)
-										a = append(a, aux)
+
 										// Create recovery
 										CreateRecovery(cluster, project1, volumeName, deploymentName, mountPath, pathVolume)
 										// Create restic
 										CreateRestic(cluster, project1, volumeName, deploymentName, mountPath, pathVolume)
 
-										// TODO create stats
-										CreateStats(cluster, project1, volumeName, deploymentName, mountPath, pathVolume)
 										//ExportDataFromVolume(podName, pathVolume, mountPath)
+										aux["size"] = CreateStats(cluster, project1, volumeName, deploymentName, mountPath, pathVolume, podName)
+										a = append(a, aux)
+
 									}
 								}
 							}
@@ -140,7 +152,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 	}
 }
 
-func CreateDescription(cluster, pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
+func CreateDescription(dataType, cluster, pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
 	descriptionVolume, descriptionVolumeMount map[string]interface{}) map[string]interface{} {
 
 	var nameJson string
@@ -161,6 +173,7 @@ func CreateDescription(cluster, pathVolume, volumeName, podName, mountPath, rsNa
 	m["deploymentName"] = deploymentName
 	m["descriptionVolume"] = descriptionVolume
 	m["descriptionVolumeMount"] = descriptionVolumeMount
+	m["dataType"] = dataType
 
 
 	/*err := utils.WriteJson(pathVolume, "data", m)
@@ -280,7 +293,7 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 }
 
 // TODO
-func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic string) {
+func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic, podName string) string {
 	// TODO
 	var stats map[string]interface{}
 	var nameStats string
@@ -292,14 +305,15 @@ func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, path
 		nameStats = "statsTo"
 	}
 
-	// TODO
-
-
 	auxName := "stats-" + deploymentName
+	sizeVolume := utils.GetSizeVolume(podName, volumeName, mountPath)
+	stats["name"]  = auxName
+	stats["size"] = sizeVolume
 	err := utils.WriteJson(pathRestic, nameStats, stats)
 	if err != nil {
 		fmt.Println("Error creating " + auxName)
 	}
+	return sizeVolume
 }
 
 func getItems() []interface{} {

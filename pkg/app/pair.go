@@ -44,6 +44,11 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 					pair = make(map[string]interface{})
 					pair["deploymentName"] = v["deploymentName"]
 					pair["volumeName"] = v["volumeName"]
+					pair["sizeFrom"] = v["size"]
+					pair["sizeTo"] = k["size"]
+					pair["dataTypeFrom"] = v["dataType"]
+					pair["dataTypeTo"] = k["dataType"]
+
 					ok, _ := utils.In_array(pair, pairs)
 					if !ok {
 						pairs = append(pairs, pair)
