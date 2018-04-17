@@ -16,6 +16,15 @@ func LoginCluster(cluster, username, password string) {
 	fmt.Println(string(CmdOut))
 }
 
+func LoginAdmin(cluster string) {
+
+	CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin", "--insecure-skip-tls-verify=true")
+	//CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin")
+	CmdOut, err := CmdLogin.Output()
+	fmt.Println(string(CmdOut))
+	CheckErrorMessage(err, "Error running login")
+}
+
 func GetObjects(typeObject string) string {
 	CmdGetDeployments := exec.Command("oc", "get", typeObject, "-o", "json")
 	CmdOut, err := CmdGetDeployments.Output()

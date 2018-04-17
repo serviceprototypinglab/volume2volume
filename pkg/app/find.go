@@ -21,14 +21,18 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 	if cluster == "ClusterFrom"{
 		cluster1 = ClusterFrom
 		project1 = ProjectFrom
+		utils.LoginCluster(cluster1, UsernameFrom, PasswordFrom)
+
 	} else {
 		cluster1 = ClusterTo
 		project1 = ProjectTo
+		utils.LoginCluster(cluster1, UsernameTo, PasswordTo)
+
 	}
 
 	// Connect to the cluster
 	fmt.Println("USER -> " +  UsernameFrom)
-	utils.LoginCluster(cluster1, UsernameFrom, PasswordFrom)
+	// utils.LoginCluster(cluster1, UsernameFrom, PasswordFrom)
 	os.Mkdir(PathData, os.FileMode(0777)) //All permission?
 	os.Mkdir(PathData + "/" + cluster, os.FileMode(0777))
 
@@ -233,10 +237,10 @@ ReadJsonData
 	var nameRestic string
 	// TODO Backend -> local, s3, glusterFS, ...
 	if cluster == "ClusterFrom" {
-		restic = utils.ReadJson("templates", "restic_s3_template_from")
+		restic = utils.ReadJson("templates/restic", "restic_s3_template_from")
 		nameRestic = "resticFrom"
 	} else {
-		restic = utils.ReadJson("templates", "restic_s3_template_to")
+		restic = utils.ReadJson("templates/restic", "restic_s3_template_to")
 		nameRestic = "resticTo"
 	}
 
@@ -271,10 +275,10 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 	var nameRecovery string
 	// TODO Backend -> local, s3, glusterFS, ...
 	if cluster == "ClusterFrom" {
-		recovery = utils.ReadJson("templates", "recovery_s3_template_from")
+		recovery = utils.ReadJson("templates/recovery", "recovery_s3_template_from")
 		nameRecovery= "recoveryFrom"
 	} else {
-		recovery = utils.ReadJson("templates", "recovery_s3_template_to")
+		recovery = utils.ReadJson("templates/recovery", "recovery_s3_template_to")
 		nameRecovery = "recoveryTo"
 	}
 
@@ -292,16 +296,14 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 	}
 }
 
-// TODO
 func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic, podName string) string {
-	// TODO
 	var stats map[string]interface{}
 	var nameStats string
 	if cluster == "ClusterFrom" {
-		stats = utils.ReadJson("templates", "stats_template_from")
+		stats = utils.ReadJson("templates/stats", "stats_template_from")
 		nameStats = "statsFrom"
 	} else {
-		stats = utils.ReadJson("templates", "stats_template_to")
+		stats = utils.ReadJson("templates/stats", "stats_template_to")
 		nameStats = "statsTo"
 	}
 

@@ -29,3 +29,32 @@ func PrintVolumes(v map[string]interface{}) {
 	fmt.Println(v["sizeFrom"].(string))
 	fmt.Println("-------*------")
 }
+
+
+func ShowMigration(PathData string) {
+	var pairs []map[string]interface{}
+
+	pairs = utils.ReadJsonArray(PathData + "/pairs/", "pairs")
+	fmt.Println("STATUS OF MIGRATION")
+	fmt.Println("--------------------")
+	for _, p := range pairs {
+		fmt.Println("")
+		fmt.Println("BACK UP")
+		fmt.Println("--------------------")
+		showRestic(p["deploymentName"].(string))
+		fmt.Println("")
+		fmt.Println("RECOVERY")
+		fmt.Println("--------------------")
+		showRecovery(p["deploymentName"].(string))
+		fmt.Println("******************************************")
+	}
+}
+
+func showRestic(deployment string) {
+	fmt.Println("TODO " + deployment)
+}
+
+func showRecovery(deployment string) {
+	fmt.Println("TODO " + deployment)
+}
+

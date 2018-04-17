@@ -15,15 +15,14 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
 	"volume2volume/pkg/utils"
 )
 
-// initCmd represents the init command
-var initCmd = &cobra.Command{
-	Use:   "init",
+// showMigrationCmd represents the showMigration command
+var showMigrationCmd = &cobra.Command{
+	Use:   "showMigration",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -32,45 +31,25 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("init called")
-		//clusterFrom
-		configureCluster("clusterFrom")
-		//clusterTo
-		configureCluster("clusterTo")
+		fmt.Println("showMigration called")
+		PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
+			UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
+			utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
+				ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+		app.ShowMigration(PathData)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(initCmd)
-
-
+	RootCmd.AddCommand(showMigrationCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// initCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// showMigrationCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// initCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
-
-
-
-// Identify the version of the cluster and create the proper stash version.
-func configureCluster(cluster string) {
-	// TODO add support to the restic,recovery objects to the cluster and secrets
-
-	fmt.Println(cluster)
-	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
-		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
-		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
-			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-
-	app.InitCluster(ClusterFrom)
-	if ClusterFrom != ClusterTo {
-		app.InitCluster(ClusterTo)
-	}
-
+	// showMigrationCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

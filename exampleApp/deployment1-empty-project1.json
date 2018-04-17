@@ -15,7 +15,8 @@
       "metadata": {
         "creationTimestamp": null,
         "labels": {
-          "service": "deployment1"
+          "service": "deployment1",
+          "v2v": "database2"
         }
       },
       "spec": {
