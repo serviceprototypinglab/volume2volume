@@ -52,4 +52,7 @@ secret_s3.txt
 /stash/RESTIC_PASSWORD
 
 
+/templates/secrets/*
+./templates/secrets/*
+
 
