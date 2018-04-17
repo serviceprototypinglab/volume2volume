@@ -4,7 +4,7 @@ import (
 	"volume2volume/pkg/utils"
 )
 
-func InitCluster(cluster string) {
+func InitCluster(cluster, username, password string) {
 
 	//stash := utils.ReadJson("templates/stash", "stash-openshift")
 	//fmt.Println(stash)
@@ -15,7 +15,9 @@ func InitCluster(cluster string) {
 
 	// Create secrets for backend.
 	// s3
+	utils.LoginCluster(cluster, username, password)
 	utils.CreateSecret("S3")
+
 	// Minio
 	utils.CreateSecret("MINIO")
 

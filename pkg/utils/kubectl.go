@@ -18,20 +18,18 @@ func CreateObject(path string) {
 
 }
 
-func CreateSecret(secret string) {
+func CreateSecret(secretName string) {
 	path := "templates/secrets/"
-	//CmdCreate := exec.Command("kubectl", "create", "-f", path + "/" + name)
-	CmdCreate := exec.Command("kubectl", "create", "-f", path)
+	CmdCreate := exec.Command("kubectl", "create", "generic", secretName+"-secret",
+		"--from-file=" + path + "RESTIC_PASSWORD",
+		"--from-file=" + path + secretName + "_ACCESS_KEY_ID",
+		"--from-file=" + path + secretName + "_SECRET_ACCESS_KEY")
 	fmt.Println("kubectl " + "create " + "-f " + path)
-	//CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin")
 	CmdOut, err := CmdCreate.Output()
 	fmt.Println("OUT")
 	fmt.Println(string(CmdOut))
-	CheckErrorMessage(err, "Error running kubectl create -f " + path)
-	//fmt.Println(string(CmdOut))
-
+	CheckErrorMessage(err, "Error running kubectl create generic secret" + path)
 }
-
 
 
 func GetSizeVolume(podName, containerName, pathData string) string {

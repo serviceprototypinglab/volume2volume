@@ -68,9 +68,9 @@ func configureCluster(cluster string) {
 		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 
-	app.InitCluster(ClusterFrom)
+	app.InitCluster(ClusterFrom, UsernameFrom, PasswordFrom)
 	if ClusterFrom != ClusterTo {
-		app.InitCluster(ClusterTo)
+		app.InitCluster(ClusterTo, UsernameTo, PasswordTo)
 	}
 
 }
