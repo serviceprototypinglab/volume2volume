@@ -19,16 +19,17 @@ func CreateObject(path string) {
 }
 
 func CreateSecret(secretName string) {
-	path := "templates/secrets/"
-	CmdCreate := exec.Command("kubectl", "create", "generic", secretName+"-secret",
+	// TODO change the path to one from configuration
+	path := "./templates/secrets/"
+	CmdCreate := exec.Command("kubectl", "create", "secret", "generic", secretName+"-secret",
 		"--from-file=" + path + "RESTIC_PASSWORD",
 		"--from-file=" + path + secretName + "_ACCESS_KEY_ID",
 		"--from-file=" + path + secretName + "_SECRET_ACCESS_KEY")
-	fmt.Println("kubectl " + "create " + "-f " + path)
+	//fmt.Println("kubectl " + "create " + "-f " + path)
 	CmdOut, err := CmdCreate.Output()
 	fmt.Println("OUT")
 	fmt.Println(string(CmdOut))
-	CheckErrorMessage(err, "Error running kubectl create generic secret" + path)
+	CheckErrorMessage(err, "Error running kubectl create generic secret " + path)
 }
 
 

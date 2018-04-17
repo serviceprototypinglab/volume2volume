@@ -4,21 +4,40 @@ import (
 	"volume2volume/pkg/utils"
 )
 
-func InitCluster(cluster, username, password string) {
+func InitClusters(clusterFrom, clusterTo, projectFrom, projectTo, usernameFrom,
+	passwordFrom, usernameTo, passwordTo string) {
 
 	//stash := utils.ReadJson("templates/stash", "stash-openshift")
 	//fmt.Println(stash)
 
 	// Create stash in the cluster
-	utils.LoginAdmin(cluster)
+	utils.LoginAdmin(clusterFrom)
 	utils.CreateObject("./templates/stash/stash-openshift.json")
 
-	// Create secrets for backend.
-	// s3
-	utils.LoginCluster(cluster, username, password)
-	utils.CreateSecret("S3")
+	if clusterFrom != clusterTo {
+		// Create stash in the cluster
+		utils.LoginAdmin(clusterTo)
+		utils.CreateObject("./templates/stash/stash-openshift.json")
+	}
 
-	// Minio
-	utils.CreateSecret("MINIO")
+	// Create secrets for restic backend.
+	// ClusterFrom
+	// s3
+	utils.LoginCluster(clusterFrom, usernameFrom, passwordFrom)
+	utils.ChangeProject(projectFrom)
+	utils.CreateSecret("s3")
+	// minio
+	utils.CreateSecret("minio")
+
+	// Create secrets for restic backend.
+	// ClusterTo
+	// s3
+	utils.LoginCluster(clusterTo, usernameTo, passwordTo)
+	utils.ChangeProject(projectTo)
+	utils.CreateSecret("s3")
+	// minio
+	utils.CreateSecret("minio")
 
 }
+
+

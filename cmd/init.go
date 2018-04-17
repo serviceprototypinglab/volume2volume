@@ -42,9 +42,6 @@ to quickly create a Cobra application.`,
 
 func init() {
 	RootCmd.AddCommand(initCmd)
-
-
-
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -60,7 +57,7 @@ func init() {
 
 // Identify the version of the cluster and create the proper stash version.
 func configureCluster(cluster string) {
-	// TODO add support to the restic,recovery objects to the cluster and secrets
+	// TODO add support to the restic, recovery objects to the cluster and secrets
 
 	fmt.Println(cluster)
 	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
@@ -68,9 +65,7 @@ func configureCluster(cluster string) {
 		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 
-	app.InitCluster(ClusterFrom, UsernameFrom, PasswordFrom)
-	if ClusterFrom != ClusterTo {
-		app.InitCluster(ClusterTo, UsernameTo, PasswordTo)
-	}
+	app.InitClusters(ClusterFrom, ClusterTo, ProjectFrom, ProjectTo,
+		UsernameFrom, PasswordFrom, UsernameTo, PasswordTo)
 
 }

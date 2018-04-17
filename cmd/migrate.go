@@ -57,7 +57,10 @@ func migrateData(cmd *cobra.Command, args []string){
 		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
 		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	app.Migrate(PathData)
+
+	app.Migrate(PathData, ClusterFrom, UsernameFrom,
+		PasswordFrom, ProjectFrom, ClusterTo,
+		UsernameTo, PasswordTo, ProjectTo)
 }
 
 
