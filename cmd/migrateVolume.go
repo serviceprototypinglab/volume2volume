@@ -44,7 +44,8 @@ func MigrateVolume(command *cobra.Command, strings []string) {
 		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
 		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
-	app.MigrateVolume(PathData, deploymentName, volumeName)
+	app.MigrateVolume(PathData, deploymentName, volumeName, ClusterFrom, UsernameFrom,
+		PasswordFrom, ProjectFrom, ClusterTo, UsernameTo, PasswordTo, ProjectTo)
 }
 
 func init() {
