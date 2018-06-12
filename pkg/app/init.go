@@ -17,7 +17,7 @@ func InitClusters(clusterFrom, clusterTo, projectFrom, projectTo, usernameFrom,
 	if clusterFrom != clusterTo {
 		// Create stash in the cluster
 		utils.LoginAdmin(clusterTo)
-		utils.CreateObject("./templates/stash/stash-openshift.json")
+		utils.CreateObject("./templates/stash/stash-openshift.yaml")
 	}
 
 	// Create secrets for restic backend.

@@ -1,3 +1,7 @@
+/*
+	ConfObject package.
+	Configuration objects for the migration of the data.
+*/
 package confObject
 
 type ConfObject struct {

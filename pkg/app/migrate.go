@@ -11,34 +11,42 @@ func MigrateVolume(PathData, deploymentName, volumeName,
 		ClusterTo, UsernameTo, PasswordTo, ProjectTo string) {
 
 	//Create Restic To
-	auxPath := PathData + "/pairs/" + deploymentName + "/" + volumeName + "/"
+	auxPath := "./" + PathData + "/pairs/" + deploymentName + "/" + volumeName + "/"
 
-	utils.LoginCluster(ClusterTo, UsernameTo, PasswordTo)
+
+	// TODO MAYBE CHANGE THAT
+	utils.LoginAdmin(ClusterTo)
 	utils.ChangeProject(ProjectTo)
 	utils.CreateObject(auxPath + "resticTo.json")
 	// Check resticTo is done.
-	fmt.Println("sleeping")
-	time.Sleep(20*time.Second)
-	fmt.Println("wake up")
+	fmt.Println("RESTIC_TO")
+	//time.Sleep(20*time.Second)
+	//fmt.Println("wake up")
 
 	//Check if it is done
 	// Deployment available
 	// Restic re
 
 	//Create Restic From
-	utils.LoginCluster(ClusterFrom, UsernameFrom, PasswordFrom)
+	//utils.LoginAdmin(ClusterFrom)
+
 	utils.ChangeProject(ProjectFrom)
 	utils.CreateObject(auxPath + "resticFrom.json")
+	fmt.Println("RESTIC_FROM")
+
 
 	//Check if it is done
 	// TODO
 	// Status.BackupCount > 1
-	fmt.Println("sleeping")
-	time.Sleep(20*time.Second)
-	fmt.Println("wake up")
+	//fmt.Println("sleeping")
+	// kubectl describe restic "restic_name"
+
+	time.Sleep(150*time.Second)
+	//fmt.Println("wake up")
 
 	//Create Recovery To
-	utils.LoginCluster(ClusterTo, UsernameTo, PasswordTo)
+	//utils.LoginAdmin(ClusterTo)
+	fmt.Println("Recovery_to")
 	utils.ChangeProject(ProjectTo)
 	utils.CreateObject(auxPath + "recoveryTo.json")
 

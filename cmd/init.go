@@ -15,7 +15,6 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
 	"volume2volume/pkg/app"
 	"volume2volume/pkg/utils"
@@ -24,7 +23,7 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "A brief description of your command",
+	Short: "A brief description of your command1",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -64,6 +63,8 @@ func configureCluster(cluster string) {
 		UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc =
 		utils.GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo,
 			ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
+
+
 
 	app.InitClusters(ClusterFrom, ClusterTo, ProjectFrom, ProjectTo,
 		UsernameFrom, PasswordFrom, UsernameTo, PasswordTo)

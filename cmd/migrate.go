@@ -50,7 +50,7 @@ func init() {
 	// migrateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func migrateData(cmd *cobra.Command, args []string){
+func migrateData(cmd *cobra.Command, args []string) {
 	//TODO  migrate list of volumes in parallel
 	//downData(cmd, args)
 	PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,

@@ -55,4 +55,5 @@ secret_s3.txt
 /templates/secrets/*
 ./templates/secrets/*
 
-
+./minio
+/minio

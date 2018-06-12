@@ -19,7 +19,7 @@
     "backend": {
       "s3": {
         "endpoint": "http://160.85.164.170:9000",
-        "bucket": "ramzrestic"
+        "bucket": "ramzrestic1"
       },
       "storageSecretName": "minio-secret"
     },

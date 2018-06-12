@@ -19,12 +19,19 @@ func CreateObject(path string) {
 }
 
 func CreateSecret(secretName string) {
+	auxSecretName := secretName
+	if secretName == "s3" {
+		auxSecretName = "AWS"
+	}
+	if secretName == "minio" {
+		auxSecretName = "MINIO"
+	}
 	// TODO change the path to one from configuration
 	path := "./templates/secrets/"
-	CmdCreate := exec.Command("kubectl", "create", "secret", "generic", secretName+"-secret",
+	CmdCreate := exec.Command("kubectl", "create", "secret", "generic", secretName + "-secret",
 		"--from-file=" + path + "RESTIC_PASSWORD",
-		"--from-file=" + path + secretName + "_ACCESS_KEY_ID",
-		"--from-file=" + path + secretName + "_SECRET_ACCESS_KEY")
+		"--from-file=" + path + auxSecretName + "_ACCESS_KEY_ID",
+		"--from-file=" + path + auxSecretName + "_SECRET_ACCESS_KEY")
 	//fmt.Println("kubectl " + "create " + "-f " + path)
 	CmdOut, err := CmdCreate.Output()
 	fmt.Println("OUT")

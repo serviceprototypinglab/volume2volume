@@ -1,0 +1,12 @@
+{"apiVersion":"stash.appscode.com/v1alpha1",
+  "kind":"Restic",
+  "metadata":{"name":"deployment2","namespace":"project1"},
+  "spec":
+  {"backend":{"s3":{"bucket":"ramzrestic1","endpoint":"s3.amazonaws.com"},
+    "storageSecretName":"s3-secret"},
+    "fileGroups":[{"path":"/data/db","retentionPolicyName":"keep-last-2"}],
+    "retentionPolicies":[{"keepLast":2,"name":"keep-last-2","prune":true}],
+    "schedule":"@every 2m",
+    "selector":{"matchLabels":{"app":"deployment2"}},
+    "volumeMounts":
+    [{"mountPath":"/data/db","name":"deployment2-storage"}]}}

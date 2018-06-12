@@ -19,11 +19,11 @@
     "backend": {
       "s3": {
         "endpoint": "s3.amazonaws.com",
-        "bucket": "ramzrestic"
+        "bucket": "ramzrestic1"
       },
       "storageSecretName": "s3-secret"
     },
-    "schedule": "@every 2m",
+    "schedule": "@every 1m",
     "volumeMounts": [
       {
         "mountPath": "/data/db",

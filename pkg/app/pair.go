@@ -59,7 +59,7 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 			}
 		}
 	}
-	utils.WriteJsonArray(PathData + "/pairs/", "pairs", pairs)
+	utils.WriteJsonArray(PathData + "/pairs", "pairs", pairs)
 	return from, to
 }
 

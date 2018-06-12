@@ -248,6 +248,7 @@ ReadJsonData
 	//Change name
 	auxName := "restic-" + deploymentName
 	fmt.Println("name -->")
+	auxName = deploymentName
 	restic["metadata"].(map[string]interface{})["name"] = auxName
 	//fmt.Println(restic["metadata"].(map[string]interface{})["name"].(string))
 	//Change namespace
@@ -284,9 +285,10 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 
 	// Change namespace, name,
 	auxName := "recovery-" + deploymentName
+	auxName = deploymentName
 	recovery["metadata"].(map[string]interface{})["name"] = auxName
 	recovery["metadata"].(map[string]interface{})["namespace"] = namespace
-	recovery["spec"].(map[string]interface{})["workload"].(map[string]interface{})["name"] = volumeName
+	recovery["spec"].(map[string]interface{})["workload"].(map[string]interface{})["name"] = deploymentName
 	recovery["spec"].(map[string]interface{})["paths"].([]interface{})[0] = mountPath
 	recovery["spec"].(map[string]interface{})["recoveredVolumes"].([]interface{})[0].(map[string]interface{})["mountPath"] = mountPath
 
