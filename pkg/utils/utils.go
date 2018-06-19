@@ -1,3 +1,6 @@
+/*
+	In this package you can find useful methods which interacting with the openshift cluster.
+*/
 package utils
 
 import (
@@ -31,6 +34,7 @@ func GetTypeObjects(ObjectsOc, ObjectsTypes []string) []string {
 	return ObjectsTypes
 }
 
+// Get the configuration using the key: "s"  from the config file ~/.volume2volume.yaml
 func GetValueFromConfig(s string) interface{} {
 	home, err := homedir.Dir()
 	if err != nil {
@@ -177,6 +181,7 @@ func GetAllValueReturnObject(confObject confObject.ConfObject) confObject.ConfOb
 	return confObject
 }
 
+// Get ALL the configuration using the key: "s"  from the config file ~/.volume2volume.yaml
 func GetAllValue(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 	keys := []string{"pathtemplate","pathdata","objects","clusterto", "clusterfrom","projectto", "projectfrom",
@@ -241,6 +246,7 @@ UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) {
 	}
 }
 
+// Get ALL the configuration using the key: "s"  from the config file ~/.volume2volume.yaml
 func GetAllValueReturn(PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 UsernameTo, UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) (string, string, string, string,
 	string, string, string, string, string, string, []string) {

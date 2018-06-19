@@ -4,6 +4,9 @@ import (
 	"volume2volume/pkg/utils"
 )
 
+//It is used for initialize the clusters.
+// Initialize the cluster for use stash (restic, recovery objects).
+// Create the secrets for use the cloud storage (s3, minio, ....)
 func InitClusters(clusterFrom, clusterTo, projectFrom, projectTo, usernameFrom,
 	passwordFrom, usernameTo, passwordTo string) {
 

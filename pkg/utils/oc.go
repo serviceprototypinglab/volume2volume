@@ -5,6 +5,7 @@ import (
 	"os/exec"
 )
 
+// login in the openshift cluster
 func LoginCluster(cluster, username, password string) {
 	username = "--username=" + username
 	password = "--password=" + password
@@ -16,6 +17,8 @@ func LoginCluster(cluster, username, password string) {
 	fmt.Println(string(CmdOut))
 }
 
+// Login to the user admin (minishift)
+// TODO chante it for production clusters
 func LoginAdmin(cluster string) {
 
 	CmdLogin := exec.Command("oc", "login", cluster, "-u", "system:admin", "--insecure-skip-tls-verify=true")
@@ -25,6 +28,7 @@ func LoginAdmin(cluster string) {
 	CheckErrorMessage(err, "Error running login")
 }
 
+// Get the objects of the typeObjects in the cluster and the project that you login beforehand.
 func GetObjects(typeObject string) string {
 	CmdGetDeployments := exec.Command("oc", "get", typeObject, "-o", "json")
 	CmdOut, err := CmdGetDeployments.Output()
@@ -36,6 +40,7 @@ func GetObjects(typeObject string) string {
 	return string(CmdOut)
 }
 
+// Change to the project: projectName.
 func ChangeProject(projectName string) {
 	CmdProject := exec.Command("oc", "project", projectName)
 	CmdProjectOut, err := CmdProject.Output()

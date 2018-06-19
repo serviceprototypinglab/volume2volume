@@ -2,6 +2,8 @@ package utils
 
 import "fmt"
 
+
+// functions that show the error in the console with some message
 func CheckErrorMessage(err error, message string){
 	if err != nil {
 

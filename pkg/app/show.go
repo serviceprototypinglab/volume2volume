@@ -5,9 +5,10 @@ import (
 	"volume2volume/pkg/utils"
 )
 
-//TODO Show all the volumes pairs and statistics in a nice way.
+// Show the volumes found it and the stats.
 func ShowVolumes(PathData string) {
 	var pairs []map[string]interface{}
+	//TODO Show all the volumes pairs and statistics in a nice way.
 
 	pairs = utils.ReadJsonArray(PathData + "/pairs/", "pairs")
 
@@ -18,6 +19,7 @@ func ShowVolumes(PathData string) {
 	}
 }
 
+// Print in the terminal the volumes
 func PrintVolumes(v map[string]interface{}) {
 	fmt.Print("DEPLOYMENT -> ")
 	fmt.Println(v["deploymentName"].(string))
@@ -30,7 +32,7 @@ func PrintVolumes(v map[string]interface{}) {
 	fmt.Println("-------*------")
 }
 
-
+// TODO Show the migration or the process of the migration.
 func ShowMigration(PathData string) {
 	var pairs []map[string]interface{}
 
@@ -50,12 +52,14 @@ func ShowMigration(PathData string) {
 	}
 }
 
+//TODO
 func showRestic(deployment string) {
 
 	// DESCRIPTION ->
 	fmt.Println("TODO " + deployment)
 }
 
+// TODO
 func showRecovery(deployment string) {
 	fmt.Println("TODO " + deployment)
 }

@@ -8,6 +8,9 @@ import (
 	"volume2volume/pkg/confObject"
 )
 
+
+// Find all the volumes in the two clusters. Create a restic, a recovery a description and stats of each volume.
+// Pairs the volumes by name in the same deployment (in cluster).
 func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
 	UsernameTo, UsernameFrom, PasswordFrom, PasswordTo  string,ObjectsOc []string) {
 
@@ -156,6 +159,7 @@ func FindVolumes(cluster, PathTemplate, PathData, ClusterFrom, ClusterTo, Projec
 	}
 }
 
+// Create a json file with the description of the volume.
 func CreateDescription(dataType, cluster, pathVolume, volumeName, podName, mountPath, rsName, deploymentName string,
 	descriptionVolume, descriptionVolumeMount map[string]interface{}) map[string]interface{} {
 
@@ -226,6 +230,7 @@ func CreateDescription(dataType, cluster, pathVolume, volumeName, podName, mount
 	return m
 }
 
+// Create a json of the restic object for the volume given.
 func CreateRestic(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic string) {
 
 	/*type restic struct {
@@ -271,6 +276,7 @@ ReadJsonData
 	}
 }
 
+// Create a json of the recovery object for the volume given.
 func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic string) {
 	var recovery map[string]interface{}
 	var nameRecovery string
@@ -298,6 +304,7 @@ func CreateRecovery(cluster, namespace, volumeName, deploymentName, mountPath, p
 	}
 }
 
+// Create a json with the stats of the volume.
 func CreateStats(cluster, namespace, volumeName, deploymentName, mountPath, pathRestic, podName string) string {
 	var stats map[string]interface{}
 	var nameStats string

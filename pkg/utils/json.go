@@ -23,6 +23,7 @@ func ReadJson(path, name string) map[string]interface{} {
 	return data
 }
 
+//Json functions
 func ReadJsonData(path string) []map[string]interface{} {
 	fmt.Println(path)
 	plan, _ := ioutil.ReadFile(path + "/data.json")
@@ -38,6 +39,7 @@ func ReadJsonData(path string) []map[string]interface{} {
 	return data
 }
 
+//Json functions
 func ReadJsonArray(path, name string) []map[string]interface{} {
 	fmt.Println(path)
 	plan, _ := ioutil.ReadFile(path + "/" + name + ".json")
@@ -53,6 +55,7 @@ func ReadJsonArray(path, name string) []map[string]interface{} {
 	return data
 }
 
+//Json functions
 func WriteJson(path, name string, data map[string]interface{}) error {
 	//write json in path restic
 	f, err3 := os.Create(path +"/"+ name +".json")
@@ -76,6 +79,7 @@ func WriteJson(path, name string, data map[string]interface{}) error {
 	return nil
 }
 
+//Json functions
 func WriteJsonArray(path, name string, data []map[string]interface{}) error {
 	//write json in path restic
 	f, err3 := os.Create(path +"/"+ name +".json")

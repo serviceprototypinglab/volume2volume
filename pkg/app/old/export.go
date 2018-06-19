@@ -1,3 +1,4 @@
+// Not used anymore methods
 package app
 
 import (

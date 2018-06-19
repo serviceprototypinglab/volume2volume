@@ -5,6 +5,7 @@ import (
 	"os/exec"
 )
 
+// Deploy the object in path
 func CreateObject(path string) {
 	//CmdCreate := exec.Command("kubectl", "create", "-f", path + "/" + name)
 	CmdCreate := exec.Command("kubectl", "create", "-f", path)
@@ -18,6 +19,8 @@ func CreateObject(path string) {
 
 }
 
+// Create a secret. All the info of the object should be in templates/secrets
+// secretName supported are s3 or minio
 func CreateSecret(secretName string) {
 	auxSecretName := secretName
 	if secretName == "s3" {
@@ -40,6 +43,7 @@ func CreateSecret(secretName string) {
 }
 
 
+// Get size of the volume (used for stats)
 func GetSizeVolume(podName, containerName, pathData string) string {
 	CmdCreate := exec.Command("kubectl", "exec", podName, "--", "du", "-sh", pathData)
 	CmdOut, err := CmdCreate.Output()

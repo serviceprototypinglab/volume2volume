@@ -6,6 +6,7 @@ import (
 	"volume2volume/pkg/utils"
 )
 
+// Create the object recovery for the volume: VolumeName in the deployment: deploymentName.
 func RecoveryVolume(PathData, deploymentName, volumeName string) {
 
 	//Create Restic To
@@ -26,6 +27,7 @@ func RecoveryVolume(PathData, deploymentName, volumeName string) {
 
 }
 
+// Create all the objects recovery for all the pairs of volumes.
 func Recovery(PathData string) {
 	var pairs []map[string]interface{}
 	pairs = utils.ReadJsonArray(PathData + "/pairs/", "pairs")

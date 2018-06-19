@@ -7,6 +7,7 @@ import (
 	"os/exec"
 )
 
+// Find all the volumes in the two clusters. And make a pairs using the deployment name and the volume name.
 func PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo,
 UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string]interface{},
 	[]map[string]interface{}) {
@@ -63,6 +64,7 @@ UsernameFrom, PasswordFrom, PasswordTo string, ObjectsOc []string) ([]map[string
 	return from, to
 }
 
+// Copy the files of one folder to another destination
 func copy(srcFolder string, destFolder string) {
 	// Read all content of src to data
 	/*data, err := ioutil.ReadFile(src)

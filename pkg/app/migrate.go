@@ -6,6 +6,10 @@ import (
 	"fmt"
 )
 
+
+// 1. Create the proper restic object in cluster From (back up)
+// 2. Create the proper restic object in cluster To (recovery)
+// 3. Create the proper recovery object in cluster To (recovery)
 func MigrateVolume(PathData, deploymentName, volumeName,
 	ClusterFrom, UsernameFrom, PasswordFrom, ProjectFrom,
 		ClusterTo, UsernameTo, PasswordTo, ProjectTo string) {
@@ -52,6 +56,7 @@ func MigrateVolume(PathData, deploymentName, volumeName,
 
 }
 
+// Call MigrateVolume for all the pairs of volumes.
 func Migrate(PathData, ClusterFrom, UsernameFrom, PasswordFrom, ProjectFrom, ClusterTo,
 	UsernameTo, PasswordTo, ProjectTo string) {
 	var pairs []map[string]interface{}
