@@ -16,17 +16,19 @@ before_script:
   - pwd
 
 stages:
-  # - test
+  - test
   - build
 
-#test_project:
-#  stage: test
-#  only:
-#    - master
-# script:
-#    - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-#    - go generate $(go list ./... | grep -v /vendor/)
-#    - go test $(go list ./... | grep -v /vendor/)
+test_project:
+  stage: test
+  only:
+    - master
+ script:
+    - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - go generate $(go list ./... | grep -v /vendor/)
+    - cd pkg
+    - cd utils
+    - go test -v
 
 
 binaries:
