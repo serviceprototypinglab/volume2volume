@@ -26,8 +26,8 @@ test_project:
   script:
     - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
     - go generate $(go list ./... | grep -v /vendor/)
-    - cd pkg
-    - cd utils
+    - cp -r . $GOPATH/src/$CI_PROJECT_NAME
+    - cd $GOPATH/src/$CI_PROJECT_NAME/pkg/utils
     - go test -v
 
 
