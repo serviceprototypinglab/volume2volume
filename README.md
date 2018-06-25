@@ -20,10 +20,16 @@
 
 Use the command `help` to see the list of command and the description of them.
 
-With `findVolumes`, you will identify the volumes in the two clusters and make the pairs.
 With `backup`, you will create the restic objects to do the backup of the volumes. (in the old cluster).
-With `up`, you will create the recovery objects to upload the data to the volumes. (in the new cluster).
-With `migrate`, you will combine the 3 before commands.
+With `backUpVolume`, you will create the restic objects to do the backup of one volumes. (in the old cluster).
+With `findVolumes`, you will identify the volumes in the two clusters and make the pairs.
+With `init`, you will initialize the cluster to get ready for stash objects.
+With `migrate`, you will combine the findVolumes, backup and recovery commands.
+With `migrateVolume`, you will combine the findVolumes, backUpVolume and recoveryVolume commands.
+With `recovery`, you will create the recovery objects to upload the data to the volumes. (in the new cluster).
+With `recoveryVolume`, you will create the recovery object of one volume to upload the data to this volume. (in the new cluster).
+With `showMigration`, show the volumes migrated.
+With `showVolumes`, show the volumes that were paired.
 
 The configuration can be added in `~/.volume2volume.yaml` or directly using the flags.
 Use help to see all the flags.
@@ -65,6 +71,16 @@ Download the binary from /binaries/< your operative system> and run:
     mv volume2volume $GOPATH/src/volume2volume
     go install volume2volume
 ```
+
+### With Docker (Not necessary oc and kubectl)
+
+#### Dockerfile
+
+Create the docker image using the dockerfile and connect later to the container for use volume2volume.
+
+#### DockeHub image
+
+Run `docker pull mohammedalameen94/vol2vol` to get the container image.
 
 ## First steps
 

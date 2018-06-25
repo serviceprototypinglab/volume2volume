@@ -23,13 +23,8 @@ import (
 // backupCmd represents the backup command
 var backupCmd = &cobra.Command{
 	Use:   "backup",
-	Short: "Make a backup off all the volumes",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Make a backup of all the volumes",
+	Long: `Make a backup of all the volumes creating a restic object"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("backup called")
 		//app.ExportData(cmd, args, PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
