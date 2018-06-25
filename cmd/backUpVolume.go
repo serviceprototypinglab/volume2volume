@@ -23,13 +23,8 @@ import (
 // backUpVolumeCmd represents the backUpVolume command
 var backUpVolumeCmd = &cobra.Command{
 	Use:   "backUpVolume",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "backup of a volume",
+	Long: `Create the restic objects to do the backup of one volumes`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("backUpVolume called")
 		// TODO. Take names from configuration. Using flags for deploymentName, volumeName.

@@ -24,15 +24,10 @@ import (
 // findVolumesCmd represents the findVolumes command
 var findVolumesCmd = &cobra.Command{
 	Use:   "findVolumes",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Identify volumes",
+	Long: `Identify the volumes in the two clusters and make the pairs`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("findVolumes called")
+		//fmt.Println("findVolumes called")
 		FindAllVolumes(cmd, args)
 		app.PairsVolumesByName(PathData, PathTemplate, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom, UsernameTo, UsernameFrom, PasswordFrom, PasswordTo, ObjectsOc)
 		//fmt.Println(a[0]["podName"])

@@ -24,13 +24,8 @@ import (
 // recoveryVolumeCmd represents the recoveryVolume command
 var recoveryVolumeCmd = &cobra.Command{
 	Use:   "recoveryVolume",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Recovery the volume indicated",
+	Long: `Create the recovery object of one volume to upload the data to this volume. (in the new cluster)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("recoveryVolume called")
 		// TODO. Take names from configuration

@@ -23,13 +23,8 @@ import (
 // showMigrationCmd represents the showMigration command
 var showMigrationCmd = &cobra.Command{
 	Use:   "showMigration",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Show the volumes migrated",
+	Long: `Show the volumes migrated""`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("showMigration called")
 		PathTemplate, PathData, ClusterFrom, ClusterTo, ProjectTo, ProjectFrom,
